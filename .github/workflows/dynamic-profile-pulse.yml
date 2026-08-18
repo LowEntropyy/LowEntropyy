@@ -37,7 +37,7 @@ jobs:
   pulse:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify profile data token
+      - name: Publish token diagnostic status
         shell: bash
         env:
           DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
@@ -45,8 +45,8 @@ jobs:
         run: |
           set -euo pipefail
           if [[ -z "${DATA_TOKEN:-}" ]]; then
-            desc="missing PROFILE_PULSE_TOKEN"
             state="failure"
+            desc="missing PROFILE_PULSE_TOKEN"
           else
             curl -sS -D /tmp/headers -o /tmp/user.json \
               -H "Authorization: Bearer $DATA_TOKEN" \
@@ -54,45 +54,12 @@ jobs:
               https://api.github.com/user
             login="$(python -c 'import json; print(json.load(open("/tmp/user.json")).get("login", "unknown"))')"
             scopes="$(awk 'BEGIN{IGNORECASE=1} /^x-oauth-scopes:/ {sub(/^[^:]*:[[:space:]]*/, ""); gsub(/\r/, ""); print; exit}' /tmp/headers)"
-            cat >/tmp/graphql.json <<'JSON'
-          {"query":"query { user(login: \"LowEntropyy\") { contributionsCollection { contributionCalendar { totalContributions } } } }"}
-          JSON
+            printf '%s' '{"query":"query { user(login: \"LowEntropyy\") { contributionsCollection { contributionCalendar { totalContributions } } } }"}' >/tmp/graphql.json
             curl -sS -o /tmp/graphql-out.json \
               -H "Authorization: Bearer $DATA_TOKEN" \
               -H "Content-Type: application/json" \
               --data-binary @/tmp/graphql.json \
               https://api.github.com/graphql
-            total="$(python -c 'import json; d=json.load(open("/tmp/graphql-out.json")); print((((d.get("data") or {}).get("user") or {}).get("contributionsCollection") or {}).get("contributionCalendar",{}).get("totalContributions","unknown"))')"
-            desc="login=$login scopes=${scopes:-none} total=$total"
-            state="success"
-          fi
-          python - <<'PY' > /tmp/status.json
-          import json, os
-          print(json.dumps({"state": os.environ["STATE"], "context": "profile-pulse-token", "description": os.environ["DESC"][:140]}))
-          PY
-        env:
-          DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
-          STATUS_TOKEN: ${{ github.token }}
-          STATE: success
-          DESC: token-check
-
-      - name: Publish token diagnostic status
-        if: always()
-        shell: bash
-        env:
-          DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
-          STATUS_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          if [[ -z "${DATA_TOKEN:-}" ]]; then
-            state="failure"
-            desc="missing PROFILE_PULSE_TOKEN"
-          else
-            curl -sS -D /tmp/headers -o /tmp/user.json -H "Authorization: Bearer $DATA_TOKEN" https://api.github.com/user
-            login="$(python -c 'import json; print(json.load(open("/tmp/user.json")).get("login", "unknown"))')"
-            scopes="$(awk 'BEGIN{IGNORECASE=1} /^x-oauth-scopes:/ {sub(/^[^:]*:[[:space:]]*/, ""); gsub(/\r/, ""); print; exit}' /tmp/headers)"
-            printf '%s' '{"query":"query { user(login: \"LowEntropyy\") { contributionsCollection { contributionCalendar { totalContributions } } } }"}' >/tmp/graphql.json
-            curl -sS -o /tmp/graphql-out.json -H "Authorization: Bearer $DATA_TOKEN" -H "Content-Type: application/json" --data-binary @/tmp/graphql.json https://api.github.com/graphql
             total="$(python -c 'import json; d=json.load(open("/tmp/graphql-out.json")); print((((d.get("data") or {}).get("user") or {}).get("contributionsCollection") or {}).get("contributionCalendar",{}).get("totalContributions","unknown"))')"
             state="success"
             desc="login=$login scopes=${scopes:-none} total=$total"
