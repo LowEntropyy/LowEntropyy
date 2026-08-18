@@ -40,6 +40,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          # User-scoped read:user token: data reads only; never used for publishing.
           DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
           CALLER_REPO: ${{ github.repository }}
           EVENT_SCHEDULE: ${{ github.event.schedule }}
