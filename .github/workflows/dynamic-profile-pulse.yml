@@ -25,13 +25,28 @@ on:
       timezone: "Asia/Kuala_Lumpur"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+concurrency:
+  group: dynamic-github-pulse
+  cancel-in-progress: true
+
 jobs:
   pulse:
-    permissions:
-      contents: write
-    uses: ./.github/workflows/render-pulse.yml
-    with:
-      mode: user
-      subject: LowEntropyy
-      label: LowEntropyy
-      days: "14"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run central pulse renderer
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CALLER_REPO: ${{ github.repository }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+          MODE: user
+          SUBJECT: LowEntropyy
+          LABEL: LowEntropyy
+          DAYS: "14"
+        run: |
+          rm -rf /tmp/pulse-control
+          git clone --quiet --depth 1 --branch main https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
+          bash /tmp/pulse-control/scripts/render-pulse.sh
