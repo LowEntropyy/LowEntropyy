@@ -30,28 +30,91 @@ rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
 git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
 git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
 
-# Upstream pinned commit's ECG QRS complex has a +3px net Y displacement per
-# active beat (`+3 - a + (a + 8) - 8 = +3`), so a busy 14-day window visibly
-# drifts downward. Apply one bounded local patch after checkout so each beat
-# returns to the same baseline (`... - 11 = 0`). Fail loudly if upstream text
-# no longer matches instead of silently patching the wrong code.
+# Apply two bounded fixes to the pinned upstream source. Both patches fail
+# loudly if the expected pinned source shape changes.
 python3 - <<'PY'
 from pathlib import Path
-path = Path('/tmp/github-pulse/lib/card.ts')
-text = path.read_text()
+
+# 1) ECG QRS baseline: upstream has +3px net Y displacement per active beat.
+card_path = Path('/tmp/github-pulse/lib/card.ts')
+card = card_path.read_text()
 old = 'l2 -8`; // QRS complex'
 new = 'l2 -11`; // QRS complex'
-count = text.count(old)
+count = card.count(old)
 if count != 1:
     raise SystemExit(f'expected exactly one ECG baseline patch target, found {count}')
-patched = text.replace(old, new, 1)
-if patched.count(new) != 1 or old in patched:
+card = card.replace(old, new, 1)
+if card.count(new) != 1 or old in card:
     raise SystemExit('ECG baseline patch verification failed')
-path.write_text(patched)
+card_path.write_text(card)
 print('ECG baseline patch verified: QRS net Y displacement = 0')
+
+# 2) Busy repo history: upstream GraphQL exposes only the first 100 recent
+# commit nodes, which truncates dense repositories such as Sona. Keep GraphQL
+# for annual totals/metadata, but obtain the recent default-branch window from
+# the authenticated REST commits endpoint with pagination.
+github_path = Path('/tmp/github-pulse/lib/github.ts')
+github = github_path.read_text()
+replacements = [
+    (
+        '  const now = Date.now();\n  const res = await fetch(`${API}/graphql`, {',
+        '  const now = Date.now();\n'
+        '  const since = new Date(now - REPO_WINDOW_DAYS * 86_400_000).toISOString();\n'
+        '  const sinceYear = new Date(now - 365 * 86_400_000).toISOString();\n'
+        '  const res = await fetch(`${API}/graphql`, {',
+    ),
+    (
+        '        since: new Date(now - REPO_WINDOW_DAYS * 86_400_000).toISOString(),\n'
+        '        sinceYear: new Date(now - 365 * 86_400_000).toISOString(),',
+        '        since,\n        sinceYear,',
+    ),
+    (
+        '  const history = r.defaultBranchRef?.target;\n  return {',
+        '  const history = r.defaultBranchRef?.target;\n\n'
+        '  const recentDates: string[] = [];\n'
+        '  let recentPartial = false;\n'
+        '  for (let page = 1; ; page++) {\n'
+        '    const commits = await rest<RestCommit[]>(\n'
+        '      `/repos/${owner}/${repo}/commits?since=${encodeURIComponent(since)}&per_page=100&page=${page}`,\n'
+        '    );\n'
+        '    recentDates.push(\n'
+        '      ...commits\n'
+        '        .map((c) => c.commit.committer?.date ?? c.commit.author?.date ?? "")\n'
+        '        .filter((date) => date.length > 0),\n'
+        '    );\n'
+        '    if (commits.length < 100) break;\n'
+        '    if (page >= 100) {\n'
+        '      recentPartial = true;\n'
+        '      break;\n'
+        '    }\n'
+        '  }\n\n'
+        '  return {',
+    ),
+    (
+        '    days: daysFromCommitDates(\n'
+        '      history?.recent.nodes.map((n) => n.committedDate) ?? [],\n'
+        '    ),',
+        '    days: daysFromCommitDates(recentDates),',
+    ),
+    (
+        '    // the wave truncates when the window had more commits than one page\n'
+        '    partial: (history?.recent.totalCount ?? 0) > 100,',
+        '    partial: recentPartial,',
+    ),
+]
+for i, (old_text, new_text) in enumerate(replacements, start=1):
+    count = github.count(old_text)
+    if count != 1:
+        raise SystemExit(f'expected exactly one repo-history patch target {i}, found {count}')
+    github = github.replace(old_text, new_text, 1)
+
+github_path.write_text(github)
+print('Repo history pagination patch verified: recent default-branch commits are fully paged')
 PY
 
 grep -Fq 'l2 -11`; // QRS complex' /tmp/github-pulse/lib/card.ts
+grep -Fq 'for (let page = 1; ; page++) {' /tmp/github-pulse/lib/github.ts
+grep -Fq 'days: daysFromCommitDates(recentDates),' /tmp/github-pulse/lib/github.ts
 
 # Prime the small TypeScript runner before a scheduled boundary so the actual
 # SVG render can begin immediately after the target time.
