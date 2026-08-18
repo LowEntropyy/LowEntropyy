@@ -7,6 +7,11 @@ set -euo pipefail
 : "${SUBJECT:?SUBJECT is required}"
 : "${LABEL:?LABEL is required}"
 
+# DATA_TOKEN is optional. Repo callers can keep using their repository-scoped
+# GITHUB_TOKEN for both data and publishing. The Profile caller may supply a
+# separate user-scoped read token so private contribution counts are included,
+# while GH_TOKEN remains the only credential used to publish pulse-assets.
+DATA_TOKEN="${DATA_TOKEN:-$GH_TOKEN}"
 DAYS="${DAYS:-14}"
 EVENT_SCHEDULE="${EVENT_SCHEDULE:-}"
 
@@ -56,7 +61,8 @@ fi
 
 echo "Resolved theme=$phase at $(TZ=Asia/Kuala_Lumpur date +%H:%M:%S)."
 
-export GITHUB_TOKEN="$GH_TOKEN"
+# github-pulse uses GITHUB_TOKEN only for GitHub API reads during rendering.
+export GITHUB_TOKEN="$DATA_TOKEN"
 export INPUT_OUT="/tmp/pulse.svg"
 export INPUT_THEME="$phase"
 export INPUT_SIZE="wide"
@@ -75,6 +81,8 @@ fi
 npx --yes tsx /tmp/github-pulse/scripts/generate.ts
 test -s /tmp/pulse.svg
 
+# Publishing deliberately uses the caller repository's own GITHUB_TOKEN, never
+# the optional Profile data token.
 git clone --quiet --filter=blob:none "https://x-access-token:${GH_TOKEN}@github.com/${CALLER_REPO}.git" /tmp/caller
 cd /tmp/caller
 
