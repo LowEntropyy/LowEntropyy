@@ -34,6 +34,7 @@ git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab
 # loudly if the expected pinned source shape changes.
 python3 - <<'PY'
 from pathlib import Path
+import re
 
 # 1) ECG QRS baseline: upstream has +3px net Y displacement per active beat.
 card_path = Path('/tmp/github-pulse/lib/card.ts')
@@ -49,72 +50,138 @@ if card.count(new) != 1 or old in card:
 card_path.write_text(card)
 print('ECG baseline patch verified: QRS net Y displacement = 0')
 
-# 2) Busy repo history: upstream GraphQL exposes only the first 100 recent
-# commit nodes, which truncates dense repositories such as Sona. Keep GraphQL
-# for annual totals/metadata, but obtain the recent default-branch window from
-# the authenticated REST commits endpoint with pagination.
+# 2) Busy repo history: upstream requests only the first 100 recent commit
+# nodes. Paginate that GraphQL history connection with endCursor so dense
+# repositories keep a complete recent window without switching data sources.
 github_path = Path('/tmp/github-pulse/lib/github.ts')
 github = github_path.read_text()
-replacements = [
+
+literal_replacements = [
     (
-        '  const now = Date.now();\n  const res = await fetch(`${API}/graphql`, {',
-        '  const now = Date.now();\n'
-        '  const since = new Date(now - REPO_WINDOW_DAYS * 86_400_000).toISOString();\n'
-        '  const sinceYear = new Date(now - 365 * 86_400_000).toISOString();\n'
-        '  const res = await fetch(`${API}/graphql`, {',
+        'query ($owner: String!, $name: String!, $since: GitTimestamp!, $sinceYear: GitTimestamp!) {',
+        'query ($owner: String!, $name: String!, $since: GitTimestamp!, $sinceYear: GitTimestamp!, $cursor: String) {',
     ),
     (
-        '        since: new Date(now - REPO_WINDOW_DAYS * 86_400_000).toISOString(),\n'
-        '        sinceYear: new Date(now - 365 * 86_400_000).toISOString(),',
-        '        since,\n        sinceYear,',
+        '          recent: history(first: 100, since: $since) {',
+        '          recent: history(first: 100, after: $cursor, since: $since) {',
     ),
     (
-        '  const history = r.defaultBranchRef?.target;\n  return {',
-        '  const history = r.defaultBranchRef?.target;\n\n'
-        '  const recentDates: string[] = [];\n'
-        '  let recentPartial = false;\n'
-        '  for (let page = 1; ; page++) {\n'
-        '    const commits = await rest<RestCommit[]>(\n'
-        '      `/repos/${owner}/${repo}/commits?since=${encodeURIComponent(since)}&per_page=100&page=${page}`,\n'
-        '    );\n'
-        '    recentDates.push(\n'
-        '      ...commits\n'
-        '        .map((c) => c.commit.committer?.date ?? c.commit.author?.date ?? "")\n'
-        '        .filter((date) => date.length > 0),\n'
-        '    );\n'
-        '    if (commits.length < 100) break;\n'
-        '    if (page >= 100) {\n'
-        '      recentPartial = true;\n'
-        '      break;\n'
-        '    }\n'
-        '  }\n\n'
-        '  return {',
+        '            totalCount\n            nodes { committedDate }',
+        '            totalCount\n            pageInfo { hasNextPage endCursor }\n            nodes { committedDate }',
     ),
     (
-        '    days: daysFromCommitDates(\n'
-        '      history?.recent.nodes.map((n) => n.committedDate) ?? [],\n'
-        '    ),',
-        '    days: daysFromCommitDates(recentDates),',
-    ),
-    (
-        '    // the wave truncates when the window had more commits than one page\n'
-        '    partial: (history?.recent.totalCount ?? 0) > 100,',
-        '    partial: recentPartial,',
+        '          recent: { totalCount: number; nodes: { committedDate: string }[] };',
+        '          recent: {\n'
+        '            totalCount: number;\n'
+        '            pageInfo: { hasNextPage: boolean; endCursor: string | null };\n'
+        '            nodes: { committedDate: string }[];\n'
+        '          };',
     ),
 ]
-for i, (old_text, new_text) in enumerate(replacements, start=1):
+for i, (old_text, new_text) in enumerate(literal_replacements, start=1):
     count = github.count(old_text)
     if count != 1:
-        raise SystemExit(f'expected exactly one repo-history patch target {i}, found {count}')
+        raise SystemExit(f'expected exactly one GraphQL pagination patch target {i}, found {count}')
     github = github.replace(old_text, new_text, 1)
 
+function_pattern = re.compile(
+    r'async function fetchRepoViaGraphQL\(\n'
+    r'  owner: string,\n'
+    r'  repo: string,\n'
+    r'\): Promise<GithubData> \{.*?\n\}\n\ninterface RestRepoMeta',
+    re.S,
+)
+new_function = '''async function fetchRepoViaGraphQL(
+  owner: string,
+  repo: string,
+): Promise<GithubData> {
+  const now = Date.now();
+  const since = new Date(now - REPO_WINDOW_DAYS * 86_400_000).toISOString();
+  const sinceYear = new Date(now - 365 * 86_400_000).toISOString();
+  let cursor: string | null = null;
+  let repoData: NonNullable<RepoGraphQLResponse["data"]>["repository"] = null;
+  const recentDates: string[] = [];
+  let recentPartial = false;
+
+  for (let page = 1; page <= 100; page++) {
+    const res = await fetch(`${API}/graphql`, {
+      method: "POST",
+      headers: { ...headers(), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: REPO_GRAPHQL_QUERY,
+        variables: { owner, name: repo, since, sinceYear, cursor },
+      }),
+      next: { revalidate: REVALIDATE },
+    });
+    if (!res.ok) {
+      throw new Error(`GitHub GraphQL ${res.status}`);
+    }
+    const json = (await res.json()) as RepoGraphQLResponse;
+    const pageRepo = json.data?.repository;
+    if (!pageRepo) {
+      if (json.errors?.some((e) => e.type === "NOT_FOUND")) {
+        throw new UserNotFoundError(`${owner}/${repo}`);
+      }
+      throw new Error(json.errors?.[0]?.message ?? "GraphQL returned no repository");
+    }
+
+    if (!repoData) repoData = pageRepo;
+    const pageHistory = pageRepo.defaultBranchRef?.target;
+    recentDates.push(
+      ...(pageHistory?.recent.nodes.map((n) => n.committedDate) ?? []),
+    );
+
+    const pageInfo = pageHistory?.recent.pageInfo;
+    if (!pageInfo?.hasNextPage) break;
+    if (!pageInfo.endCursor || page === 100) {
+      recentPartial = true;
+      break;
+    }
+    cursor = pageInfo.endCursor;
+  }
+
+  const r = repoData;
+  if (!r) throw new Error("GraphQL returned no repository");
+  const history = r.defaultBranchRef?.target;
+  return {
+    login: `${owner}/${r.name}`,
+    name: r.name,
+    days: daysFromCommitDates(recentDates),
+    totalContributions: history?.year.totalCount ?? 0,
+    topLanguages: r.primaryLanguage ? [{ name: r.primaryLanguage.name, pct: 100 }] : [],
+    stars: r.stargazerCount,
+    followers: 0,
+    prs: r.pullRequests.totalCount,
+    issues: r.issues.totalCount,
+    reviews: 0,
+    partial: recentPartial,
+  };
+}
+
+interface RestRepoMeta'''
+github, replaced = function_pattern.subn(new_function, github, count=1)
+if replaced != 1:
+    raise SystemExit(f'expected exactly one fetchRepoViaGraphQL function, replaced {replaced}')
+
+checks = [
+    '$cursor: String',
+    'history(first: 100, after: $cursor, since: $since)',
+    'pageInfo { hasNextPage endCursor }',
+    'let cursor: string | null = null;',
+    'recentDates.push(',
+    'partial: recentPartial,',
+]
+for check in checks:
+    if check not in github:
+        raise SystemExit(f'GraphQL pagination verification missing: {check}')
+
 github_path.write_text(github)
-print('Repo history pagination patch verified: recent default-branch commits are fully paged')
+print('Repo history pagination patch verified: GraphQL cursor paging enabled')
 PY
 
 grep -Fq 'l2 -11`; // QRS complex' /tmp/github-pulse/lib/card.ts
-grep -Fq 'for (let page = 1; ; page++) {' /tmp/github-pulse/lib/github.ts
-grep -Fq 'days: daysFromCommitDates(recentDates),' /tmp/github-pulse/lib/github.ts
+grep -Fq 'history(first: 100, after: $cursor, since: $since)' /tmp/github-pulse/lib/github.ts
+grep -Fq 'partial: recentPartial,' /tmp/github-pulse/lib/github.ts
 
 # Prime the small TypeScript runner before a scheduled boundary so the actual
 # SVG render can begin immediately after the target time.
