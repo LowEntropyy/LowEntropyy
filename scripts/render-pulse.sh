@@ -21,6 +21,14 @@ case "$EVENT_SCHEDULE" in
   "33 22 * * *"|"43 22 * * *") phase="cyber" ;;
 esac
 
+rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
+git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
+git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
+
+# Prime the small TypeScript runner before a scheduled boundary so the actual
+# SVG render can begin immediately after the target time.
+npx --yes tsx --version >/dev/null
+
 if [[ -n "$target" ]]; then
   now_epoch="$(date +%s)"
   today="$(TZ=Asia/Kuala_Lumpur date +%F)"
@@ -47,10 +55,6 @@ if [[ "$phase" == "auto" ]]; then
 fi
 
 echo "Resolved theme=$phase at $(TZ=Asia/Kuala_Lumpur date +%H:%M:%S)."
-
-rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
-git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
-git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
 
 export GITHUB_TOKEN="$GH_TOKEN"
 export INPUT_OUT="/tmp/pulse.svg"
