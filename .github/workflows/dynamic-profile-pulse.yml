@@ -40,6 +40,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
           CALLER_REPO: ${{ github.repository }}
           EVENT_SCHEDULE: ${{ github.event.schedule }}
           MODE: user
