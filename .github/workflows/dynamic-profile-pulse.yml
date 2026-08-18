@@ -1,0 +1,37 @@
+name: Dynamic Profile Pulse
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "55 6 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "3 7 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "13 7 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "25 18 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "33 18 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "43 18 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "25 22 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "33 22 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+    - cron: "43 22 * * *"
+      timezone: "Asia/Kuala_Lumpur"
+  workflow_dispatch:
+
+jobs:
+  pulse:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/render-pulse.yml
+    with:
+      mode: user
+      subject: LowEntropyy
+      label: LowEntropyy
+      days: "14"
