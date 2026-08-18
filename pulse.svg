@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 150" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 202 contributions this week, 482 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 204 contributions this week, 484 in the last year.</desc>
   <style>.gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-heart{animation:gp-thump 0.3s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
        .gp-dot{animation:gp-blink 1.8s ease-in-out infinite}
@@ -32,8 +32,8 @@
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10" font-weight="600"
         fill="#2FD4EE" letter-spacing="1">RADIANT</text>
   
-  <path d="M26 74 h55.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.9 l4 17.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.3 l4 17.3 l2 -8 q3 -6.5 6 0 h14.6 h55.6 h17 q3 -1.7 6 0 l2 3 l4 -17.1 l4 25.1 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -36 l4 44 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -29.3 l4 37.3 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -21 l4 29 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -22.1 l4 30.1 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -24.9 l4 32.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17" fill="none" stroke="#2FD4EE" stroke-width="1.6" opacity="0.22"/>
-       <path class="gp-sweep" d="M26 74 h55.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.9 l4 17.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.3 l4 17.3 l2 -8 q3 -6.5 6 0 h14.6 h55.6 h17 q3 -1.7 6 0 l2 3 l4 -17.1 l4 25.1 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -36 l4 44 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -29.3 l4 37.3 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -21 l4 29 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -22.1 l4 30.1 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -24.9 l4 32.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17" pathLength="1000" fill="none"
+  <path d="M26 74 h55.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.9 l4 17.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.3 l4 17.3 l2 -8 q3 -6.5 6 0 h14.6 h55.6 h17 q3 -1.7 6 0 l2 3 l4 -17.1 l4 25.1 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -36 l4 44 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -29.3 l4 37.3 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -21 l4 29 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -22.1 l4 30.1 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -24.9 l4 32.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -8 q3 -6.5 6 0 h17" fill="none" stroke="#2FD4EE" stroke-width="1.6" opacity="0.22"/>
+       <path class="gp-sweep" d="M26 74 h55.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.9 l4 17.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -6.6 l4 14.6 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -9.3 l4 17.3 l2 -8 q3 -6.5 6 0 h14.6 h55.6 h17 q3 -1.7 6 0 l2 3 l4 -17.1 l4 25.1 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -10.4 l4 18.4 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -36 l4 44 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -29.3 l4 37.3 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -21 l4 29 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -22.1 l4 30.1 l2 -8 q3 -6.5 6 0 h17 h17 q3 -1.7 6 0 l2 3 l4 -24.9 l4 32.9 l2 -8 q3 -6.5 6 0 h14.6 h14.6 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -8 q3 -6.5 6 0 h17" pathLength="1000" fill="none"
              stroke="#2FD4EE" stroke-width="2.2" stroke-linecap="round"
              stroke-dasharray="140 860" filter="url(#gp-glow)"/>
   
@@ -44,7 +44,7 @@
         font-size="22" font-weight="700" fill="#D9EEF4">180<tspan
         font-size="10" font-weight="400" fill="#7E98A3" dx="4">bpm</tspan></text>
   <text x="150" y="128" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
-           font-size="10.5" fill="#7E98A3">⚡ 8d streak  ·  SH+  ·  482 beats/yr</text>
+           font-size="10.5" fill="#7E98A3">⚡ 8d streak  ·  SH+  ·  484 beats/yr</text>
   <text x="804" y="128" text-anchor="end"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#2FD4EE"
         class="gp-dot">● beating now</text>
