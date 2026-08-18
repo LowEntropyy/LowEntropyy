@@ -27,7 +27,6 @@ on:
 
 permissions:
   contents: write
-  statuses: write
 
 concurrency:
   group: dynamic-github-pulse
@@ -37,70 +36,11 @@ jobs:
   pulse:
     runs-on: ubuntu-latest
     steps:
-      - name: Diagnose profile data token
-        shell: bash
-        env:
-          DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
-          STATUS_TOKEN: ${{ github.token }}
-        run: |
-          set -u
-          post_status() {
-            local context="$1" state="$2" desc="$3"
-            payload="$(CONTEXT="$context" STATE="$state" DESC="$desc" python -c 'import json,os; print(json.dumps({"state":os.environ["STATE"],"context":os.environ["CONTEXT"],"description":os.environ["DESC"][:140]}))')"
-            curl -sS -o /dev/null -X POST \
-              -H "Authorization: Bearer $STATUS_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              -H "Content-Type: application/json" \
-              -d "$payload" \
-              "https://api.github.com/repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA"
-          }
-
-          if [[ -z "${DATA_TOKEN:-}" ]]; then
-            post_status profile-token-present failure "PROFILE_PULSE_TOKEN missing"
-            post_status profile-token-login failure "not checked"
-            post_status profile-token-scope failure "not checked"
-            post_status profile-token-contributions failure "not checked"
-            exit 0
-          fi
-          post_status profile-token-present success "secret supplied"
-
-          http="$(curl -sS -w '%{http_code}' -D /tmp/headers -o /tmp/user.json \
-            -H "Authorization: Bearer $DATA_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/user)"
-          login="$(python -c 'import json; print(json.load(open("/tmp/user.json")).get("login", "unknown"))' 2>/dev/null || echo unknown)"
-          if [[ "$http" == "200" && "$login" == "LowEntropyy" ]]; then
-            post_status profile-token-login success "authenticated as LowEntropyy"
-          else
-            post_status profile-token-login failure "HTTP $http login=$login"
-          fi
-
-          scopes="$(awk 'BEGIN{IGNORECASE=1} /^x-oauth-scopes:/ {sub(/^[^:]*:[[:space:]]*/, ""); gsub(/\r/, ""); print; exit}' /tmp/headers)"
-          if [[ ",${scopes// /}," == *",read:user,"* ]]; then
-            post_status profile-token-scope success "read:user present"
-          else
-            post_status profile-token-scope failure "read:user missing"
-          fi
-
-          cat >/tmp/graphql.json <<'JSON'
-          {"query":"query { user(login: \"LowEntropyy\") { contributionsCollection { contributionCalendar { totalContributions } } } }"}
-          JSON
-          gql_http="$(curl -sS -w '%{http_code}' -o /tmp/graphql-out.json \
-            -H "Authorization: Bearer $DATA_TOKEN" \
-            -H "Content-Type: application/json" \
-            --data-binary @/tmp/graphql.json \
-            https://api.github.com/graphql)"
-          total="$(python -c 'import json; d=json.load(open("/tmp/graphql-out.json")); print((((d.get("data") or {}).get("user") or {}).get("contributionsCollection") or {}).get("contributionCalendar",{}).get("totalContributions","unknown"))' 2>/dev/null || echo unknown)"
-          if [[ "$gql_http" == "200" && "$total" =~ ^[0-9]+$ && "$total" -gt 100 ]]; then
-            post_status profile-token-contributions success "calendar total=$total"
-          else
-            post_status profile-token-contributions failure "HTTP $gql_http total=$total"
-          fi
-
       - name: Run central pulse renderer
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          # User-scoped read:user token: data reads only; never used for publishing.
           DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
           CALLER_REPO: ${{ github.repository }}
           EVENT_SCHEDULE: ${{ github.event.schedule }}
