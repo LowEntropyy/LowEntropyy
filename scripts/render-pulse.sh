@@ -44,8 +44,14 @@ new = 'l2 -11`; // QRS complex'
 count = text.count(old)
 if count != 1:
     raise SystemExit(f'expected exactly one ECG baseline patch target, found {count}')
-path.write_text(text.replace(old, new, 1))
+patched = text.replace(old, new, 1)
+if patched.count(new) != 1 or old in patched:
+    raise SystemExit('ECG baseline patch verification failed')
+path.write_text(patched)
+print('ECG baseline patch verified: QRS net Y displacement = 0')
 PY
+
+grep -Fq 'l2 -11`; // QRS complex' /tmp/github-pulse/lib/card.ts
 
 # Prime the small TypeScript runner before a scheduled boundary so the actual
 # SVG render can begin immediately after the target time.
