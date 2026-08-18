@@ -30,6 +30,23 @@ rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
 git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
 git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
 
+# Upstream pinned commit's ECG QRS complex has a +3px net Y displacement per
+# active beat (`+3 - a + (a + 8) - 8 = +3`), so a busy 14-day window visibly
+# drifts downward. Apply one bounded local patch after checkout so each beat
+# returns to the same baseline (`... - 11 = 0`). Fail loudly if upstream text
+# no longer matches instead of silently patching the wrong code.
+python3 - <<'PY'
+from pathlib import Path
+path = Path('/tmp/github-pulse/lib/card.ts')
+text = path.read_text()
+old = 'l2 -8`; // QRS complex'
+new = 'l2 -11`; // QRS complex'
+count = text.count(old)
+if count != 1:
+    raise SystemExit(f'expected exactly one ECG baseline patch target, found {count}')
+path.write_text(text.replace(old, new, 1))
+PY
+
 # Prime the small TypeScript runner before a scheduled boundary so the actual
 # SVG render can begin immediately after the target time.
 npx --yes tsx --version >/dev/null
