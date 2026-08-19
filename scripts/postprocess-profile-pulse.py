@@ -38,29 +38,53 @@ svg, header_count = re.subn(
 if header_count != 1:
     fail(f"expected one in-card account heading, found {header_count}")
 
-# Profile Pulse intentionally has no heart icon or heart-thump element. Remove
-# both the renderer glyph and its now-dead animation CSS so it cannot reappear as
-# an accidental visual accent.
-svg, heart_count = re.subn(
-    r'\s*<text class="gp-heart" x="26" y="98"[\s\S]*?</text>\n',
-    '\n',
+# Keep exactly one small heartbeat accent inside the HEART RATE module. Reuse
+# the renderer's theme-aware fill and animation hook, but shrink and relocate it
+# so it never becomes a second visual center or disturbs the four-column strip.
+heart_re = re.compile(
+    r'<text class="gp-heart" x="26" y="98"(?P<attrs>[\s\S]*?)font-size="18"(?P<tail>[\s\S]*?)>♥</text>'
+)
+heart_match = heart_re.search(svg)
+if not heart_match:
+    fail("expected one renderer heart glyph")
+svg, heart_count = heart_re.subn(
+    lambda m: (
+        '<text class="gp-heart" x="22" y="222"'
+        + m.group('attrs')
+        + 'font-size="11.5"'
+        + m.group('tail')
+        + '>♥</text>'
+    ),
     svg,
     count=1,
 )
 if heart_count != 1:
     fail(f"expected one renderer heart glyph, found {heart_count}")
 
-svg, heart_css_count = re.subn(r'\n?\s*\.gp-heart\{[^\n]*\}', '', svg, count=1)
+# Slow the accent to a calm UI thump instead of matching a literal 180 bpm.
+# The displayed BPM remains data; the icon animation is only a subtle sign of life.
+svg, heart_css_count = re.subn(
+    r'(\.gp-heart\{animation:gp-thump )[0-9.]+(s ease-in-out infinite;transform-origin:center;transform-box:fill-box\})',
+    r'\g<1>1.35\g<2>',
+    svg,
+    count=1,
+)
 if heart_css_count != 1:
     fail(f"expected one gp-heart CSS rule, found {heart_css_count}")
-svg, thump_css_count = re.subn(r'\n?\s*@keyframes gp-thump\{[^\n]*\}', '', svg, count=1)
+svg, thump_css_count = re.subn(
+    r'@keyframes gp-thump\{0%,100%\{transform:scale\(1\)\}15%\{transform:scale\(1\.32\)\}30%\{transform:scale\(1\)\}\}',
+    '@keyframes gp-thump{0%,100%{transform:scale(1)}20%{transform:scale(1.12)}40%{transform:scale(1)}}',
+    svg,
+    count=1,
+)
 if thump_css_count != 1:
     fail(f"expected one gp-thump keyframe, found {thump_css_count}")
 
-# Four equal bottom modules. They are intentionally horizontal now: ECG owns the
-# main field; metrics become one quiet supporting strip below it.
+# Four equal bottom modules. ECG owns the main field; metrics become one quiet
+# supporting strip. Only HEART RATE shifts 14px right on its label row to make
+# room for the small heartbeat icon; its value axis remains aligned at x=22.
 strip_positions = [
-    ('x="26" y="72"', 'x="22" y="222"', "heart-rate label"),
+    ('x="26" y="72"', 'x="36" y="222"', "heart-rate label"),
     ('x="48" y="98"', 'x="22" y="246"', "heart-rate value"),
     ('x="26" y="120"', 'x="219" y="222"', "merges label"),
     ('x="26" y="146"', 'x="219" y="246"', "merges value"),
@@ -245,15 +269,22 @@ svg = replace_once(
     "ECG lower-right status",
 )
 
-# Hard guard: the Profile variant has no heartbeat icon or heartbeat animation.
-for forbidden in ('♥', 'gp-heart', 'gp-thump'):
-    if forbidden in svg:
-        fail(f"forbidden heartbeat element survived: {forbidden}")
+# Positive guard: exactly one compact heartbeat accent must survive, and its
+# subtle thump animation must be present. This prevents both accidental removal
+# and regression to the old oversized heart treatment.
+if svg.count('♥') != 1:
+    fail(f"expected exactly one heartbeat glyph, found {svg.count('♥')}")
+if svg.count('class="gp-heart"') != 1:
+    fail(f"expected exactly one gp-heart element, found {svg.count('class=\"gp-heart\"')}")
+if svg.count('@keyframes gp-thump') != 1:
+    fail(f"expected exactly one gp-thump keyframe, found {svg.count('@keyframes gp-thump')}")
+if 'font-size="11.5"' not in svg or 'x="22" y="222"' not in svg:
+    fail("compact heartbeat accent geometry missing")
 
 path.write_text(svg)
 print(
     "Profile Pulse postprocess verified: full-width ECG + four-module bottom vitals strip; "
     f"ECG x={fmt(TARGET_X0)}..{fmt(TARGET_X1)}; "
     f"{len(amplitude_sets[0])} P-QRS-T beats; level baseline y={fmt(BASELINE)}; "
-    "no heartbeat element"
+    "one compact animated heartbeat accent"
 )
