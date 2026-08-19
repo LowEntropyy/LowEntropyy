@@ -66,17 +66,17 @@ svg = replace_once(
     "level baseline",
 )
 
-# The whole ECG must remain legible at rest. Motion is an accent travelling on
-# one primary trace, not two bright fragments floating over a nearly invisible line.
+# Keep the full ECG clearly present at rest. The animated segment is only a
+# travelling emphasis on the same trace, not a second visual track.
 svg = replace_once(
     svg,
     '<feGaussianBlur stdDeviation="2.6" result="b"/>',
-    '<feGaussianBlur stdDeviation="1.8" result="b"/>',
+    '<feGaussianBlur stdDeviation="1.7" result="b"/>',
     "ECG glow blur",
 )
 svg, base_count = re.subn(
     r'(fill="none" stroke="[^"]+" stroke-width=")1\.7(" opacity=")0\.20(")',
-    r'\g<1>1.8\g<2>0.34\g<3>',
+    r'\g<1>1.8\g<2>0.40\g<3>',
     svg,
     count=1,
 )
@@ -85,7 +85,7 @@ if base_count != 1:
 
 svg, trail_count = re.subn(
     r'(class="gp-trail"[\s\S]*?stroke="[^"]+" stroke-width=")5\.2(" stroke-linecap="round"\s+stroke-dasharray=")250 750(" opacity=")0\.11(")',
-    r'\g<1>4.2\g<2>170 830\g<3>0.08\g<4>',
+    r'\g<1>4.0\g<2>170 830\g<3>0.07\g<4>',
     svg,
     count=1,
 )
@@ -94,16 +94,17 @@ if trail_count != 1:
 
 svg, sweep_count = re.subn(
     r'(class="gp-sweep"[\s\S]*?stroke="[^"]+" stroke-width=")2\.6(" stroke-linecap="round"\s+stroke-dasharray=")92 908(")',
-    r'\g<1>2.7\g<2>170 830\g<3>',
+    r'\g<1>2.6\g<2>170 830\g<3>',
     svg,
     count=1,
 )
 if sweep_count != 1:
     fail(f"expected one ECG sweep style target, found {sweep_count}")
 
-# Read the activity amplitudes from the renderer, but rebuild the geometry as an
-# actual monitor-style P-QRS-T rhythm. The largest activity peak gets a dominant
-# R wave; mid-level activity is deliberately compressed; S stays shallow.
+# Read the activity amplitudes from the renderer, then rebuild them as a real
+# P-QRS-T monitor rhythm. Data still controls R-wave strength, but the mapping
+# deliberately gives one dominant R peak and prevents busy periods from becoming
+# a forest of near-equal tall triangles.
 source_qrs_re = re.compile(
     r'l2 3 l4 -([0-9]+(?:\.[0-9]+)?) l4 [0-9]+(?:\.[0-9]+)? l2 -11'
 )
@@ -123,12 +124,13 @@ def build_monitor_path(amplitudes: list[float]) -> str:
     peak = max(amplitudes)
     if peak <= 0:
         peak = 1.0
+    dominant_index = amplitudes.index(max(amplitudes))
 
     slot = (TARGET_X1 - TARGET_X0) / len(amplitudes)
-    # P(7) + PR(3) + Q(2) + R-up(7.5) + R/S-down(10.5)
-    # + recovery(2.5) + ST(3.5) + T(10) = 46px. Remaining width is split
-    # symmetrically before and after each beat, so no large dead zones remain.
-    morphology_width = 46.0
+    # Dense but readable beat: P(6) + PR(2) + Q(2) + R-up(12)
+    # + R/S-down(14) + recovery(3) + ST(3) + T(8) = 50px.
+    # Any remaining width is split evenly around the beat.
+    morphology_width = 50.0
     idle = slot - morphology_width
     if idle < 1.0:
         fail(f"ECG too dense for monitor morphology: slot={slot:.3f}")
@@ -136,29 +138,34 @@ def build_monitor_path(amplitudes: list[float]) -> str:
     tail = idle - lead
 
     parts = [f"M{fmt(TARGET_X0)} {fmt(BASELINE)}"]
-    for amplitude in amplitudes:
+    for index, amplitude in enumerate(amplitudes):
         normalized = max(0.0, min(1.0, amplitude / peak))
-        # Convex mapping separates the true dominant R peaks from ordinary
-        # activity instead of turning every busy day into a tall triangle.
-        rise = 9.0 + 67.0 * (normalized ** 1.7)
-        t_control = 5.5 + 3.0 * normalized
+
+        if index == dominant_index:
+            rise = 76.0
+        else:
+            rise = min(48.0, 10.0 + 66.0 * (normalized ** 2.4))
+
+        # More visible P/T morphology prevents the data trace from reading as
+        # repeated triangles while keeping both waves subordinate to QRS.
+        t_control = 12.0 + 5.0 * normalized
 
         parts.extend(
             [
                 f"h{fmt(lead)}",
-                "q3.5 -2.7 7 0",          # P wave
-                "h3",                     # PR segment
-                "l2 2.4",                 # small Q notch
-                f"l7.5 -{fmt(rise + 2.4)}",  # broad sloped R ascent
-                f"l10.5 {fmt(rise + 4.8)}",  # slower descent to shallow S
-                "l2.5 -4.8",              # exact recovery to baseline
-                "h3.5",                   # ST segment
-                f"q5 -{fmt(t_control)} 10 0", # visible but subordinate T wave
+                "q3 -5.5 6 0",              # rounded P wave
+                "h2",                       # PR segment
+                "l2 4",                     # visible but small Q notch
+                f"l12 -{fmt(rise + 4.0)}",  # broad sloped R ascent
+                f"l14 {fmt(rise + 6.0)}",   # slower descent to restrained S
+                "l3 -6",                    # exact return to baseline
+                "h3",                       # ST segment
+                f"q4 -{fmt(t_control)} 8 0",# broad subordinate T wave
                 f"h{fmt(tail)}",
             ]
         )
 
-    # Snap the final baseline to the exact right edge despite decimal rounding.
+    # Snap final baseline to the exact right edge despite decimal rounding.
     parts.append(f"H{fmt(TARGET_X1)}")
     return " ".join(parts)
 
@@ -221,5 +228,6 @@ path.write_text(svg)
 print(
     "Profile Pulse postprocess verified: centered 142px vitals rail; "
     f"monitor ECG x={fmt(TARGET_X0)}..{fmt(TARGET_X1)}; "
-    f"{len(amplitude_sets[0])} P-QRS-T beats; level baseline y={fmt(BASELINE)}"
+    f"{len(amplitude_sets[0])} P-QRS-T beats; one dominant R; "
+    f"level baseline y={fmt(BASELINE)}"
 )
