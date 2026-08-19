@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 243 contributions this week, 523 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 245 contributions this week, 525 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
@@ -40,34 +40,32 @@
   <line x1="142" y1="42" x2="142" y2="226" stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.55"/>
   <line x1="158" y1="150" x2="808" y2="150"
         stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.25"/>
-  <path d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.589 8 0 h2.083 H808" fill="none" stroke="#C4452F" stroke-width="1.8" opacity="0.40"/>
-       <path class="gp-trail" d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.589 8 0 h2.083 H808" pathLength="1000" fill="none"
+  <path d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.75 8 0 h2.083 H808" fill="none" stroke="#C4452F" stroke-width="1.8" opacity="0.40"/>
+       <path class="gp-trail" d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.75 8 0 h2.083 H808" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="4.0" stroke-linecap="round"
              stroke-dasharray="170 830" opacity="0.07" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.589 8 0 h2.083 H808" pathLength="1000" fill="none"
+       <path class="gp-sweep" d="M158 150 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.805 l14 17.805 l3 -6 h3 q4 -13.116 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -14.434 l14 16.434 l3 -6 h3 q4 -12.616 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -15.509 l14 17.509 l3 -6 h3 q4 -13.036 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -23.076 l14 25.076 l3 -6 h3 q4 -14.188 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -16.133 l14 18.133 l3 -6 h3 q4 -13.196 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -80 l14 82 l3 -6 h3 q4 -17 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.009 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -29.965 l14 31.965 l3 -6 h3 q4 -14.768 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -32.415 l14 34.415 l3 -6 h3 q4 -14.938 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -39.21 l14 41.21 l3 -6 h3 q4 -15.348 8 0 h2.083 h2.083 q3 -5.5 6 0 h2 l2 4 l12 -52 l14 54 l3 -6 h3 q4 -16.75 8 0 h2.083 H808" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="170 830" filter="url(#gp-glow)"/>
   
   
   
-  <text x="77" y="64" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+  <text x="22" y="62" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">HEART RATE</text>
-       <text class="gp-heart" x="32" y="89" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
-           font-size="18" fill="#C4452F">♥</text>
-       <text x="56" y="89" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="88" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#C4452F">180<tspan font-size="10"
            font-weight="400" fill="#8A7B67" dx="4">bpm</tspan></text>
-       <text x="77" y="108" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="105" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">MERGES / YR</text>
-       <text x="77" y="133" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="131" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#C4452F">70</text>
-       <text x="77" y="152" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="148" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">REVIEWS / YR</text>
-       <text x="77" y="177" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="174" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#A96A00">0</text>
-       <text x="77" y="196" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="191" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">STREAK · TYPE</text>
-       <text x="77" y="221" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="217" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#2A2118">8d<tspan
            fill="#8A7B67" font-size="16" dx="8">SH+</tspan></text>
   <text x="808" y="238" text-anchor="end"
