@@ -33,21 +33,22 @@ import re
 card_path = Path('/tmp/github-pulse/lib/card.ts')
 card = card_path.read_text()
 
-# ECG: zero net baseline displacement and a deeper S-wave valley.
+# ECG: preserve a mathematically level baseline while keeping the S-wave
+# subordinate to the R peak. The earlier trial over-deepened the valley.
 old_qrs = ' l2 3 l4 ${-a} l4 ${round(a + 8)} l2 -8`; // QRS complex'
-new_qrs = ' l2 6 l4 ${-a} l4 ${round(a + 22)} l2 -28`; // QRS complex'
+new_qrs = ' l2 3 l4 ${-a} l4 ${round(a + 8)} l2 -11`; // QRS complex'
 if card.count(old_qrs) != 1:
     raise SystemExit(f'expected one ECG QRS target, found {card.count(old_qrs)}')
 card = card.replace(old_qrs, new_qrs, 1)
 
-# Wide+ canvas and larger waveform envelope.
+# Wide+ canvas: a true left vitals rail plus a large right-side ECG field.
 old_layout = '''  wide: {
     w: 830, h: 150, waveX0: 26, waveX1: 804, baseline: 74, ampMax: 30,
     bandTop: 38, bandH: 72, headerY: 26, pillY: 12, footerY: 130, statsX: 150,
   },'''
 new_layout = '''  wide: {
-    w: 830, h: 260, waveX0: 26, waveX1: 804, baseline: 126, ampMax: 56,
-    bandTop: 48, bandH: 150, headerY: 32, pillY: 18, footerY: 240, statsX: 160,
+    w: 830, h: 260, waveX0: 210, waveX1: 804, baseline: 128, ampMax: 50,
+    bandTop: 48, bandH: 160, headerY: 32, pillY: 18, footerY: 240, statsX: null,
   },'''
 if card.count(old_layout) != 1:
     raise SystemExit(f'expected one Wide+ layout target, found {card.count(old_layout)}')
@@ -108,18 +109,29 @@ if body.count(old_pill) != 1:
     raise SystemExit(f'expected one pill target, found {body.count(old_pill)}')
 body = body.replace(old_pill, new_pill, 1)
 
+# Keep the account/repo name at the global top-left rather than above the ECG.
+old_header = '''      : `<text x="${lay.waveX0}" y="${lay.headerY}" font-family="${MONO}" font-size="13"
+        font-weight="600" fill="${theme.text}">${esc(header)}</text>`'''
+new_header = '''      : `<text x="26" y="${lay.headerY}" font-family="${MONO}" font-size="13"
+        font-weight="600" fill="${theme.text}">${esc(header)}</text>`'''
+if body.count(old_header) != 1:
+    raise SystemExit(f'expected one header target, found {body.count(old_header)}')
+body = body.replace(old_header, new_header, 1)
+
+# Baseline guide and a vertical divider between vitals and ECG.
 old_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goal) : ""}
   ${trace}'''
 new_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goal) : ""}
+  <line x1="190" y1="48" x2="190" y2="244" stroke="${theme.grid}" stroke-width="1" opacity="0.55"/>
   <line x1="${lay.waveX0}" y1="${lay.baseline}" x2="${lay.waveX1}" y2="${lay.baseline}"
         stroke="${theme.grid}" stroke-width="1" opacity="0.25"/>
   ${trace}'''
 if body.count(old_trace_slot) != 1:
-    raise SystemExit(f'expected one baseline guide target, found {body.count(old_trace_slot)}')
+    raise SystemExit(f'expected one baseline/divider target, found {body.count(old_trace_slot)}')
 body = body.replace(old_trace_slot, new_trace_slot, 1)
 
-# Reuse upstream's existing BPM cluster as the first metric. Replace only the
-# old single-line stats with three additional monitor-style blocks to its right.
+# Replace the normal horizontal stats and BPM footer with one official-style
+# vertical vitals rail on the left. Repo cards retain truthful repo semantics.
 stats_pattern = re.compile(
     r'  const statsText =\n'
     r'    lay\.statsX !== null && !options\.hide\.has\("stats"\) && alive\n'
@@ -129,42 +141,53 @@ stats_pattern = re.compile(
     re.S,
 )
 new_stats = '''  const isRepoPulse = pulse.login.includes("/");
-  const metric2Label = isRepoPulse ? "OPEN PRS" : "PRS / YR";
+  const metric2Label = isRepoPulse ? "OPEN PRS" : "MERGES / YR";
   const metric2Value = String(pulse.prs);
   const metric3Label = isRepoPulse ? "OPEN ISSUES" : "REVIEWS / YR";
   const metric3Value = String(isRepoPulse ? pulse.issues : pulse.reviews);
   const statsText = !alive || options.hide.has("stats")
     ? ""
-    : `<text x="26" y="214" font-family="${MONO}" font-size="9.5"
+    : `<text x="26" y="72" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">HEART RATE</text>
-       <text x="190" y="214" font-family="${MONO}" font-size="9.5"
+       <text class="gp-heart" x="26" y="98" font-family="${MONO}"
+           font-size="18" fill="${theme.trace}">♥</text>
+       <text x="48" y="98" font-family="${MONO}" font-size="24"
+           font-weight="700" fill="${theme.trace}">${bpmText}<tspan font-size="10"
+           font-weight="400" fill="${theme.muted}" dx="4">bpm</tspan></text>
+       <text x="26" y="120" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">${metric2Label}</text>
-       <text x="190" y="240" font-family="${MONO}" font-size="24"
+       <text x="26" y="146" font-family="${MONO}" font-size="24"
            font-weight="700" fill="${theme.trace}">${esc(metric2Value)}</text>
-       <text x="326" y="214" font-family="${MONO}" font-size="9.5"
+       <text x="26" y="168" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">${metric3Label}</text>
-       <text x="326" y="240" font-family="${MONO}" font-size="24"
+       <text x="26" y="194" font-family="${MONO}" font-size="24"
            font-weight="700" fill="${theme.warn}">${esc(metric3Value)}</text>
-       <text x="462" y="214" font-family="${MONO}" font-size="9.5"
+       <text x="26" y="216" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">STREAK · TYPE</text>
-       <text x="462" y="240" font-family="${MONO}" font-size="24"
+       <text x="26" y="242" font-family="${MONO}" font-size="24"
            font-weight="700" fill="${theme.text}">${pulse.streak}d<tspan
            fill="${theme.muted}" font-size="16" dx="8">${esc(pulse.bloodType)}</tspan></text>`;
 
   const pill ='''
 body, replaced = stats_pattern.subn(new_stats, body, count=1)
 if replaced != 1:
-    raise SystemExit(f'expected one left metric block target, replaced {replaced}')
+    raise SystemExit(f'expected one vitals block target, replaced {replaced}')
 
-old_bpm_number = 'font-size="22" font-weight="700" fill="${theme.text}">${bpmText}'
-new_bpm_number = 'font-size="24" font-weight="700" fill="${theme.trace}">${bpmText}'
-if body.count(old_bpm_number) != 1:
-    raise SystemExit(f'expected one BPM value style target, found {body.count(old_bpm_number)}')
-body = body.replace(old_bpm_number, new_bpm_number, 1)
+# Suppress the old footer BPM cluster; the left rail owns that information now.
+bpm_pattern = re.compile(
+    r'  const bpmCluster = options\.hide\.has\("bpm"\)\n'
+    r'    \? ""\n'
+    r'    : `<text class="gp-heart".*?</text>`;\n\n'
+    r'  const statusText =',
+    re.S,
+)
+body, replaced = bpm_pattern.subn('  const bpmCluster = "";\n\n  const statusText =', body, count=1)
+if replaced != 1:
+    raise SystemExit(f'expected one BPM cluster target, replaced {replaced}')
 
 card = card[:start] + body + card[end:]
 card_path.write_text(card)
-print('Wide+ patch verified: larger single ECG + four left-aligned monitor metrics')
+print('Wide+ patch verified: left vitals rail + large balanced right-side ECG')
 
 # Dense repository correctness: paginate default-branch history via GraphQL.
 github_path = Path('/tmp/github-pulse/lib/github.ts')
@@ -275,9 +298,9 @@ github_path.write_text(github)
 print('Repo history pagination verified')
 PY
 
-grep -Fq 'l2 -28`; // QRS complex' /tmp/github-pulse/lib/card.ts
-grep -Fq 'w: 830, h: 260, waveX0: 26, waveX1: 804, baseline: 126, ampMax: 56' /tmp/github-pulse/lib/card.ts
-grep -Fq 'HEART RATE' /tmp/github-pulse/lib/card.ts
+grep -Fq 'l2 -11`; // QRS complex' /tmp/github-pulse/lib/card.ts
+grep -Fq 'w: 830, h: 260, waveX0: 210, waveX1: 804, baseline: 128, ampMax: 50' /tmp/github-pulse/lib/card.ts
+grep -Fq 'MERGES / YR' /tmp/github-pulse/lib/card.ts
 grep -Fq 'STREAK · TYPE' /tmp/github-pulse/lib/card.ts
 grep -Fq 'class="gp-trail"' /tmp/github-pulse/lib/card.ts
 grep -Fq 'history(first: 100, after: $cursor, since: $since)' /tmp/github-pulse/lib/github.ts
