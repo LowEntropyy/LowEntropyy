@@ -21,6 +21,27 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
+def horizontal_extent(d: str) -> tuple[float, float]:
+    start = re.match(r"M(-?[0-9]+(?:\.[0-9]+)?)\s+-?[0-9]+(?:\.[0-9]+)?", d)
+    if not start:
+        fail("could not parse ECG start point")
+    x0 = float(start.group(1))
+    x = x0
+    for value in re.findall(r"\bh(-?[0-9]+(?:\.[0-9]+)?)", d):
+        x += float(value)
+    for dx, _dy in re.findall(
+        r"\bl(-?[0-9]+(?:\.[0-9]+)?)\s+(-?[0-9]+(?:\.[0-9]+)?)", d
+    ):
+        x += float(dx)
+    for _cpx, _cpy, dx, _dy in re.findall(
+        r"\bq(-?[0-9]+(?:\.[0-9]+)?)\s+(-?[0-9]+(?:\.[0-9]+)?)\s+"
+        r"(-?[0-9]+(?:\.[0-9]+)?)\s+(-?[0-9]+(?:\.[0-9]+)?)",
+        d,
+    ):
+        x += float(dx)
+    return x0, x
+
+
 path = Path(sys.argv[1] if len(sys.argv) > 1 else "/tmp/pulse.svg")
 svg = path.read_text()
 
@@ -66,9 +87,42 @@ svg = replace_once(
     "level baseline",
 )
 
-# Each generated QRS currently uses 12 horizontal units. Preserve that width,
-# but distribute it across wider sloped segments, boost R non-linearly, and
-# hold S to only five pixels below baseline. This removes the red-column look.
+# Keep the dominant trace crisp. Amplitude supplies the visual power; an overly
+# wide blur around tall R peaks is what turns an ECG spike into a red column.
+svg = replace_once(
+    svg,
+    '<feGaussianBlur stdDeviation="2.6" result="b"/>',
+    '<feGaussianBlur stdDeviation="2.2" result="b"/>',
+    "ECG glow blur",
+)
+svg = replace_once(
+    svg,
+    'stroke="#C4452F" stroke-width="5.2" stroke-linecap="round"\n             stroke-dasharray="250 750" opacity="0.11"',
+    'stroke="#C4452F" stroke-width="4.4" stroke-linecap="round"\n             stroke-dasharray="250 750" opacity="0.09"',
+    "paper trail stroke",
+) if 'stroke="#C4452F" stroke-width="5.2"' in svg else svg
+
+# The trail/sweep colors change with theme. Normalize their widths independently
+# of color so Paper, Nord and Cyber keep the same ECG geometry.
+svg, trail_width_count = re.subn(
+    r'(class="gp-trail"[\s\S]*?stroke="[^"]+" stroke-width=")5\.2(" stroke-linecap="round"[\s\S]*?opacity=")0\.11(")',
+    r'\g<1>4.4\g<2>0.09\g<3>',
+    svg,
+    count=1,
+)
+if trail_width_count == 0 and 'class="gp-trail"' in svg and 'stroke-width="4.4"' not in svg:
+    fail("could not normalize ECG trail width")
+svg, sweep_width_count = re.subn(
+    r'(class="gp-sweep"[\s\S]*?stroke="[^"]+" stroke-width=")2\.6(" stroke-linecap="round")',
+    r'\g<1>2.4\g<2>',
+    svg,
+    count=1,
+)
+if sweep_width_count != 1:
+    fail(f"expected one ECG sweep width target, found {sweep_width_count}")
+
+# Expand each QRS from 12 to 18 horizontal units. R rises/falls across 8.5 units
+# per side instead of four, while S remains only five pixels below baseline.
 qrs_re = re.compile(
     r'l2 3 l4 -([0-9]+(?:\.[0-9]+)?) l4 ([0-9]+(?:\.[0-9]+)?) l2 -11'
 )
@@ -77,27 +131,19 @@ qrs_re = re.compile(
 def reshape_qrs(match: re.Match[str]) -> str:
     amplitude = float(match.group(1))
     rise = min(70.0, amplitude * 1.12 + 4.0)
-    fall = rise + 3.0  # +2 - rise + fall - 5 == 0: exact baseline recovery.
-    return (
-        f"l1 2 l5.5 -{fmt(rise)} l5 {fmt(fall)} l0.5 -5"
-    )
+    fall = rise + 3.5  # +1.5 - rise + fall - 5 == 0: exact baseline recovery.
+    return f"l0.5 1.5 l8.5 -{fmt(rise)} l8.5 {fmt(fall)} l0.5 -5"
 
 
-# Compress the two long resting gaps, then scale the full trace to x=174..808.
-# Vertical translation moves the mathematical baseline from y=128 to y=146.
-old_span = 804.0 - 210.0
-new_raw_span = old_span - 2.0 * (42.4 - 22.0)
-target_start = 174.0
-target_end = 808.0
-scale_x = (target_end - target_start) / new_raw_span
-translate_x = target_start - scale_x * 210.0
-matrix = f"matrix({scale_x:.6f} 0 0 1 {translate_x:.3f} 18)"
-
+# Remove dead horizontal space before scaling the one trace to x=174..808.
+# The endpoint is calculated from the rewritten path, so future data changes do
+# not depend on a hard-coded raw span. Baseline translation is exactly +18px.
 trace_re = re.compile(
     r'(<path(?: class="gp-(?:trail|sweep)")? d=")(M210 128[^"]+)("[^>]*/>)'
 )
 trace_count = 0
 qrs_counts: list[int] = []
+scale_values: list[float] = []
 
 
 def reshape_trace(match: re.Match[str]) -> str:
@@ -106,12 +152,26 @@ def reshape_trace(match: re.Match[str]) -> str:
     gap_count = d.count("h42.4")
     if gap_count != 2:
         fail(f"expected two long ECG gaps per trace, found {gap_count}")
-    d = d.replace("h42.4", "h22")
+    d = d.replace("h42.4", "h18")
+    d = d.replace("h10.4", "h8.4")
+    d = re.sub(r"\bh8(?=\s|$)", "h6", d)
     d, qrs_count = qrs_re.subn(reshape_qrs, d)
     if qrs_count < 6:
         fail(f"expected at least six QRS complexes, found {qrs_count}")
+
+    raw_start, raw_end = horizontal_extent(d)
+    raw_span = raw_end - raw_start
+    if raw_span <= 0:
+        fail(f"invalid ECG raw span: {raw_span}")
+    target_start = 174.0
+    target_end = 808.0
+    scale_x = (target_end - target_start) / raw_span
+    translate_x = target_start - scale_x * raw_start
+    matrix = f"matrix({scale_x:.6f} 0 0 1 {translate_x:.3f} 18)"
+
     trace_count += 1
     qrs_counts.append(qrs_count)
+    scale_values.append(scale_x)
     tail = match.group(3)
     return (
         match.group(1)
@@ -126,6 +186,8 @@ if trace_count != 3:
     fail(f"expected base/trail/sweep ECG paths, found {trace_count}")
 if len(set(qrs_counts)) != 1:
     fail(f"ECG layers disagree on QRS count: {qrs_counts}")
+if max(scale_values) - min(scale_values) > 1e-9:
+    fail(f"ECG layers disagree on horizontal scale: {scale_values}")
 
 # State chrome belongs to the outer right edge, not the wave field.
 pill_re = re.compile(
@@ -163,5 +225,6 @@ svg = replace_once(
 path.write_text(svg)
 print(
     "Profile Pulse postprocess verified: compact 154px vitals rail; "
-    f"ECG x=174..808; {qrs_counts[0]} QRS complexes; level baseline y=146"
+    f"ECG x=174..808; {qrs_counts[0]} QRS complexes; "
+    f"scale={scale_values[0]:.3f}; level baseline y=146"
 )
