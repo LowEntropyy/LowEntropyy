@@ -27,9 +27,8 @@ svg = path.read_text()
 if 'viewBox="0 0 830 260"' not in svg:
     fail("expected 830x260 Wide+ SVG")
 
-# GitHub already renders "LowEntropyy / README.md" above the Profile README.
-# Remove the redundant in-card account heading and let the left column be only
-# the four compact vitals modules requested for this composition.
+# GitHub already provides the Profile README shell above the card. Keep the card
+# itself focused on one full-width ECG plus a compact bottom vitals strip.
 svg, header_count = re.subn(
     r'\s*<text x="26" y="32"[\s\S]*?</text>\n',
     '\n',
@@ -39,8 +38,9 @@ svg, header_count = re.subn(
 if header_count != 1:
     fail(f"expected one in-card account heading, found {header_count}")
 
-# Remove the oversized animated heart glyph from the rail. Every module now
-# shares one left axis and one 44px vertical cadence.
+# Profile Pulse intentionally has no heart icon or heart-thump element. Remove
+# both the renderer glyph and its now-dead animation CSS so it cannot reappear as
+# an accidental visual accent.
 svg, heart_count = re.subn(
     r'\s*<text class="gp-heart" x="26" y="98"[\s\S]*?</text>\n',
     '\n',
@@ -48,44 +48,53 @@ svg, heart_count = re.subn(
     count=1,
 )
 if heart_count != 1:
-    fail(f"expected one rail heart glyph, found {heart_count}")
+    fail(f"expected one renderer heart glyph, found {heart_count}")
 
-rail_positions = [
-    ('x="26" y="72"', 'x="22" y="50"', "heart-rate label"),
-    ('x="48" y="98"', 'x="22" y="76"', "heart-rate value"),
-    ('x="26" y="120"', 'x="22" y="94"', "merges label"),
-    ('x="26" y="146"', 'x="22" y="120"', "merges value"),
-    ('x="26" y="168"', 'x="22" y="138"', "reviews label"),
-    ('x="26" y="194"', 'x="22" y="164"', "reviews value"),
-    ('x="26" y="216"', 'x="22" y="182"', "streak label"),
-    ('x="26" y="242"', 'x="22" y="208"', "streak value"),
+svg, heart_css_count = re.subn(r'\n?\s*\.gp-heart\{[^\n]*\}', '', svg, count=1)
+if heart_css_count != 1:
+    fail(f"expected one gp-heart CSS rule, found {heart_css_count}")
+svg, thump_css_count = re.subn(r'\n?\s*@keyframes gp-thump\{[^\n]*\}', '', svg, count=1)
+if thump_css_count != 1:
+    fail(f"expected one gp-thump keyframe, found {thump_css_count}")
+
+# Four equal bottom modules. They are intentionally horizontal now: ECG owns the
+# main field; metrics become one quiet supporting strip below it.
+strip_positions = [
+    ('x="26" y="72"', 'x="22" y="222"', "heart-rate label"),
+    ('x="48" y="98"', 'x="22" y="246"', "heart-rate value"),
+    ('x="26" y="120"', 'x="219" y="222"', "merges label"),
+    ('x="26" y="146"', 'x="219" y="246"', "merges value"),
+    ('x="26" y="168"', 'x="415" y="222"', "reviews label"),
+    ('x="26" y="194"', 'x="415" y="246"', "reviews value"),
+    ('x="26" y="216"', 'x="612" y="222"', "streak label"),
+    ('x="26" y="242"', 'x="612" y="246"', "streak value"),
 ]
-for old, new, label in rail_positions:
+for old, new, label in strip_positions:
     svg = replace_once(svg, old, new, label)
 
-# Reclaim more width for the ECG and vertically fill the monitor field.
-# Baseline remains mathematically level; only its fixed y position changes.
+# Full-width ECG field. The old left-rail divider becomes a horizontal separator
+# above the bottom strip. Baseline remains mathematically level.
 svg = replace_once(
     svg,
     'x="200" y="48" width="614" height="160"',
-    'x="150" y="42" width="664" height="184"',
+    'x="22" y="42" width="786" height="148"',
     "ECG grid",
 )
 svg = replace_once(
     svg,
     'x1="190" y1="48" x2="190" y2="244"',
-    'x1="142" y1="42" x2="142" y2="226"',
-    "rail divider",
+    'x1="22" y1="207" x2="808" y2="207"',
+    "bottom strip divider",
 )
 svg = replace_once(
     svg,
     'x1="210" y1="128" x2="804" y2="128"',
-    'x1="158" y1="150" x2="808" y2="150"',
+    'x1="22" y1="126" x2="808" y2="126"',
     "level baseline",
 )
 
 # Keep the full ECG clearly present at rest. The animated segment is only a
-# travelling emphasis on the same trace, not a second visual track.
+# travelling emphasis on the same trace, never a second competing track.
 svg = replace_once(
     svg,
     '<feGaussianBlur stdDeviation="2.6" result="b"/>',
@@ -119,10 +128,9 @@ svg, sweep_count = re.subn(
 if sweep_count != 1:
     fail(f"expected one ECG sweep style target, found {sweep_count}")
 
-# Read the activity amplitudes from the renderer, then rebuild them as a real
-# P-QRS-T monitor rhythm. Data still controls R-wave strength, but the mapping
-# deliberately gives one dominant R peak and prevents busy periods from becoming
-# a forest of near-equal tall triangles.
+# Read activity amplitudes from the renderer and rebuild them as a P-QRS-T
+# monitor rhythm. Data controls R-wave strength; one dominant peak is preserved
+# while busy periods are prevented from becoming a forest of equal triangles.
 source_qrs_re = re.compile(
     r'l2 3 l4 -([0-9]+(?:\.[0-9]+)?) l4 [0-9]+(?:\.[0-9]+)? l2 -11'
 )
@@ -130,9 +138,9 @@ trace_re = re.compile(
     r'(<path(?: class="gp-(?:trail|sweep)")? d=")(M210 128[^"]+)("[^>]*/>)'
 )
 
-TARGET_X0 = 158.0
+TARGET_X0 = 22.0
 TARGET_X1 = 808.0
-BASELINE = 150.0
+BASELINE = 126.0
 
 
 def build_monitor_path(amplitudes: list[float]) -> str:
@@ -157,9 +165,9 @@ def build_monitor_path(amplitudes: list[float]) -> str:
         normalized = max(0.0, min(1.0, amplitude / peak))
 
         if index == dominant_index:
-            rise = 76.0
+            rise = 72.0
         else:
-            rise = min(48.0, 10.0 + 66.0 * (normalized ** 2.4))
+            rise = min(46.0, 10.0 + 62.0 * (normalized ** 2.4))
 
         t_control = 12.0 + 5.0 * normalized
 
@@ -203,7 +211,8 @@ if trace_count != 3:
 if not all(values == amplitude_sets[0] for values in amplitude_sets[1:]):
     fail("ECG layers disagree on source activity amplitudes")
 
-# State chrome stays pinned to the outer card edge.
+# State chrome remains pinned to the outer card edge. `beating now` sits at the
+# lower-right edge of the ECG field, above the vitals strip.
 pill_re = re.compile(
     r'(<rect class="gp-pill-pulse" x=")([0-9.]+)(" y="18" width=")([0-9.]+)(" height="19")'
 )
@@ -232,14 +241,19 @@ if count != 1:
 svg = replace_once(
     svg,
     'x="804" y="238" text-anchor="end"',
-    'x="808" y="238" text-anchor="end"',
-    "bottom-right status",
+    'x="808" y="198" text-anchor="end"',
+    "ECG lower-right status",
 )
+
+# Hard guard: the Profile variant has no heartbeat icon or heartbeat animation.
+for forbidden in ('♥', 'gp-heart', 'gp-thump'):
+    if forbidden in svg:
+        fail(f"forbidden heartbeat element survived: {forbidden}")
 
 path.write_text(svg)
 print(
-    "Profile Pulse postprocess verified: four-module 142px vitals rail, no duplicate heading; "
-    f"monitor ECG x={fmt(TARGET_X0)}..{fmt(TARGET_X1)}; "
-    f"{len(amplitude_sets[0])} P-QRS-T beats; one dominant R; "
-    f"level baseline y={fmt(BASELINE)}"
+    "Profile Pulse postprocess verified: full-width ECG + four-module bottom vitals strip; "
+    f"ECG x={fmt(TARGET_X0)}..{fmt(TARGET_X1)}; "
+    f"{len(amplitude_sets[0])} P-QRS-T beats; level baseline y={fmt(BASELINE)}; "
+    "no heartbeat element"
 )
