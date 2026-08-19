@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 235 contributions this week, 515 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 236 contributions this week, 516 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
@@ -31,20 +31,20 @@
   <text x="26" y="32" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="13"
         font-weight="600" fill="#2A2118">LowEntropyy</text>
 
-  <rect class="gp-pill-pulse" x="553.8" y="18" width="66.2" height="19"
+  <rect class="gp-pill-pulse" x="737.8" y="18" width="66.2" height="19"
         rx="9.5" fill="none" stroke="#C4452F" opacity="0.85"/>
-  <text x="586.9" y="31" text-anchor="middle"
+  <text x="770.9" y="31" text-anchor="middle"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10" font-weight="600"
         fill="#C4452F" letter-spacing="1">RADIANT</text>
   
   <line x1="190" y1="48" x2="190" y2="244" stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.55"/>
   <line x1="210" y1="128" x2="804" y2="128"
         stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.25"/>
-  <path d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44 l4 52 l2 -11 q3 -6.5 6 0 h10.4" fill="none" stroke="#C4452F" stroke-width="1.7" opacity="0.20"/>
-       <path class="gp-trail" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44 l4 52 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
+  <path d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" fill="none" stroke="#C4452F" stroke-width="1.7" opacity="0.20"/>
+       <path class="gp-trail" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="5.2" stroke-linecap="round"
              stroke-dasharray="250 750" opacity="0.11" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44 l4 52 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
+       <path class="gp-sweep" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="92 908" filter="url(#gp-glow)"/>
   
@@ -70,7 +70,7 @@
        <text x="26" y="242" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#2A2118">8d<tspan
            fill="#8A7B67" font-size="16" dx="8">SH+</tspan></text>
-  <text x="620" y="238" text-anchor="end"
+  <text x="804" y="238" text-anchor="end"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#C4452F"
         class="gp-dot">● beating now</text>
   
