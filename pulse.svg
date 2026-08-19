@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 236 contributions this week, 516 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 237 contributions this week, 517 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
@@ -26,51 +26,51 @@
 
   <rect x="0.5" y="0.5" width="829" height="259"
         rx="12" fill="#F6EFE3" stroke="rgba(196,69,47,0.14)"/>
-  <rect x="200" y="48" width="614" height="160" fill="url(#gp-grid)" opacity="0.9" class="gp-grid-pulse"/>
+  <rect x="166" y="44" width="648" height="172" fill="url(#gp-grid)" opacity="0.9" class="gp-grid-pulse"/>
 
-  <text x="26" y="32" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="13"
+  <text x="22" y="30" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="13"
         font-weight="600" fill="#2A2118">LowEntropyy</text>
 
-  <rect class="gp-pill-pulse" x="737.8" y="18" width="66.2" height="19"
+  <rect class="gp-pill-pulse" x="741.8" y="18" width="66.2" height="19"
         rx="9.5" fill="none" stroke="#C4452F" opacity="0.85"/>
-  <text x="770.9" y="31" text-anchor="middle"
+  <text x="774.9" y="31" text-anchor="middle"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10" font-weight="600"
         fill="#C4452F" letter-spacing="1">RADIANT</text>
   
-  <line x1="190" y1="48" x2="190" y2="244" stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.55"/>
-  <line x1="210" y1="128" x2="804" y2="128"
+  <line x1="154" y1="44" x2="154" y2="236" stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.55"/>
+  <line x1="174" y1="146" x2="808" y2="146"
         stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.25"/>
-  <path d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" fill="none" stroke="#C4452F" stroke-width="1.7" opacity="0.20"/>
-       <path class="gp-trail" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
+  <path d="M210 128 h22 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -18 l5 21 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -16.992 l5 19.992 l0.5 -5 q3 -6.5 6 0 h8 h22 h10.4 q3 -1.7 6 0 l1 2 l5.5 -31.44 l5 34.44 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -19.008 l5 22.008 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -66.72 l5 69.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -54.288 l5 57.288 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -38.72 l5 41.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -40.848 l5 43.848 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -46 l5 49 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -55.296 l5 58.296 l0.5 -5 q3 -6.5 6 0 h10.4" transform="matrix(1.146059 0 0 1 -66.672 18)" vector-effect="non-scaling-stroke" fill="none" stroke="#C4452F" stroke-width="1.7" opacity="0.20"/>
+       <path class="gp-trail" d="M210 128 h22 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -18 l5 21 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -16.992 l5 19.992 l0.5 -5 q3 -6.5 6 0 h8 h22 h10.4 q3 -1.7 6 0 l1 2 l5.5 -31.44 l5 34.44 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -19.008 l5 22.008 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -66.72 l5 69.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -54.288 l5 57.288 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -38.72 l5 41.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -40.848 l5 43.848 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -46 l5 49 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -55.296 l5 58.296 l0.5 -5 q3 -6.5 6 0 h10.4" transform="matrix(1.146059 0 0 1 -66.672 18)" vector-effect="non-scaling-stroke" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="5.2" stroke-linecap="round"
              stroke-dasharray="250 750" opacity="0.11" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M210 128 h42.4 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -12.5 l4 20.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -6.9 l4 14.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -11.6 l4 19.6 l2 -11 q3 -6.5 6 0 h8 h42.4 h10.4 q3 -1.7 6 0 l2 3 l4 -24.5 l4 32.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -13.4 l4 21.4 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -56 l4 64 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -31 l4 39 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -32.9 l4 40.9 l2 -11 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l2 3 l4 -37.5 l4 45.5 l2 -11 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l2 3 l4 -44.9 l4 52.9 l2 -11 q3 -6.5 6 0 h10.4" pathLength="1000" fill="none"
+       <path class="gp-sweep" d="M210 128 h22 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -18 l5 21 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -11.728 l5 14.728 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -16.992 l5 19.992 l0.5 -5 q3 -6.5 6 0 h8 h22 h10.4 q3 -1.7 6 0 l1 2 l5.5 -31.44 l5 34.44 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -19.008 l5 22.008 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -66.72 l5 69.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -54.288 l5 57.288 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -38.72 l5 41.72 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -40.848 l5 43.848 l0.5 -5 q3 -6.5 6 0 h10.4 h10.4 q3 -1.7 6 0 l1 2 l5.5 -46 l5 49 l0.5 -5 q3 -6.5 6 0 h8 h8 q3 -1.7 6 0 l1 2 l5.5 -55.296 l5 58.296 l0.5 -5 q3 -6.5 6 0 h10.4" transform="matrix(1.146059 0 0 1 -66.672 18)" vector-effect="non-scaling-stroke" pathLength="1000" fill="none"
              stroke="#C4452F" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="92 908" filter="url(#gp-glow)"/>
   
   
   
-  <text x="26" y="72" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+  <text x="22" y="65" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">HEART RATE</text>
-       <text class="gp-heart" x="26" y="98" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
+       <text class="gp-heart" x="22" y="91" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
            font-size="18" fill="#C4452F">♥</text>
-       <text x="48" y="98" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="44" y="91" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#C4452F">180<tspan font-size="10"
            font-weight="400" fill="#8A7B67" dx="4">bpm</tspan></text>
-       <text x="26" y="120" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="111" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">MERGES / YR</text>
-       <text x="26" y="146" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="137" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#C4452F">69</text>
-       <text x="26" y="168" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="157" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">REVIEWS / YR</text>
-       <text x="26" y="194" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="183" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#A96A00">0</text>
-       <text x="26" y="216" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
+       <text x="22" y="203" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8A7B67">STREAK · TYPE</text>
-       <text x="26" y="242" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
+       <text x="22" y="229" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#2A2118">8d<tspan
            fill="#8A7B67" font-size="16" dx="8">SH+</tspan></text>
-  <text x="804" y="238" text-anchor="end"
+  <text x="808" y="236" text-anchor="end"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#C4452F"
         class="gp-dot">● beating now</text>
   
