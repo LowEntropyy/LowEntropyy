@@ -7,10 +7,6 @@ set -euo pipefail
 : "${SUBJECT:?SUBJECT is required}"
 : "${LABEL:?LABEL is required}"
 
-# DATA_TOKEN is optional. Repo callers can keep using their repository-scoped
-# GITHUB_TOKEN for both data and publishing. The Profile caller may supply a
-# separate user-scoped read token so private contribution counts are included,
-# while GH_TOKEN remains the only credential used to publish pulse-assets.
 DATA_TOKEN="${DATA_TOKEN:-$GH_TOKEN}"
 DAYS="${DAYS:-14}"
 EVENT_SCHEDULE="${EVENT_SCHEDULE:-}"
@@ -30,8 +26,6 @@ rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
 git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
 git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
 
-# Apply bounded correctness and presentation patches to the pinned upstream.
-# Every replacement is verified so an upstream shape change fails loudly.
 python3 - <<'PY'
 from pathlib import Path
 import re
@@ -39,17 +33,14 @@ import re
 card_path = Path('/tmp/github-pulse/lib/card.ts')
 card = card_path.read_text()
 
-# 1) ECG geometry. Upstream's QRS ends +3px below its starting baseline and its
-# S-wave valley is visually shallow. Use a zero-net-displacement complex with
-# a deeper negative valley: +6 - a + (a + 22) - 28 = 0.
+# ECG: zero net baseline displacement and a deeper S-wave valley.
 old_qrs = ' l2 3 l4 ${-a} l4 ${round(a + 8)} l2 -8`; // QRS complex'
 new_qrs = ' l2 6 l4 ${-a} l4 ${round(a + 22)} l2 -28`; // QRS complex'
 if card.count(old_qrs) != 1:
-    raise SystemExit(f'expected exactly one ECG QRS patch target, found {card.count(old_qrs)}')
+    raise SystemExit(f'expected one ECG QRS target, found {card.count(old_qrs)}')
 card = card.replace(old_qrs, new_qrs, 1)
 
-# 2) Wide+ layout: keep one full-width ECG, but give the waveform substantially
-# more amplitude and reserve a monitor-like metric strip along the lower left.
+# Wide+ canvas and larger waveform envelope.
 old_layout = '''  wide: {
     w: 830, h: 150, waveX0: 26, waveX1: 804, baseline: 74, ampMax: 30,
     bandTop: 38, bandH: 72, headerY: 26, pillY: 12, footerY: 130, statsX: 150,
@@ -59,13 +50,14 @@ new_layout = '''  wide: {
     bandTop: 48, bandH: 150, headerY: 32, pillY: 18, footerY: 240, statsX: 160,
   },'''
 if card.count(old_layout) != 1:
-    raise SystemExit(f'expected exactly one Wide+ layout target, found {card.count(old_layout)}')
+    raise SystemExit(f'expected one Wide+ layout target, found {card.count(old_layout)}')
 card = card.replace(old_layout, new_layout, 1)
 
 start = card.index('function renderCardAtSize(')
 end = card.index('/**\n * Duet card:', start)
 body = card[start:end]
 
+# Multi-layer motion stays on the single ECG trace.
 old_anim = '''      ? `.gp-sweep{animation:gp-sweep ${round(sweepDur)}s linear infinite}
        .gp-heart{animation:gp-thump ${round(period)}s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
        .gp-dot{animation:gp-blink ${dotPeriod(pulse, options)}s ease-in-out infinite}
@@ -84,7 +76,7 @@ new_anim = '''      ? `.gp-trail{animation:gp-sweep ${round(sweepDur)}s linear i
        @keyframes gp-thump{0%,100%{transform:scale(1)}15%{transform:scale(1.32)}30%{transform:scale(1)}}
        @keyframes gp-blink{50%{opacity:.25}}${options.wave === "bars" ? EQ_CSS(options.speed) : ""}`'''
 if body.count(old_anim) != 1:
-    raise SystemExit(f'expected exactly one Wide+ animation target, found {body.count(old_anim)}')
+    raise SystemExit(f'expected one animation target, found {body.count(old_anim)}')
 body = body.replace(old_anim, new_anim, 1)
 
 old_trace = '''      ? `<path d="${path}" fill="none" stroke="${strokeRef}" stroke-width="1.6" opacity="0.22"/>
@@ -99,22 +91,22 @@ new_trace = '''      ? `<path d="${path}" fill="none" stroke="${strokeRef}" stro
              stroke="${strokeRef}" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="92 908" ${glowFilter}/>`'''
 if body.count(old_trace) != 1:
-    raise SystemExit(f'expected exactly one Wide+ trace target, found {body.count(old_trace)}')
+    raise SystemExit(f'expected one ECG trace target, found {body.count(old_trace)}')
 body = body.replace(old_trace, new_trace, 1)
 
 old_grid = '''      }" height="${lay.bandH}" fill="url(#gp-grid)" opacity="0.9"/>`'''
 new_grid = '''      }" height="${lay.bandH}" fill="url(#gp-grid)" opacity="0.9" class="gp-grid-pulse"/>`'''
 if body.count(old_grid) != 1:
-    raise SystemExit(f'expected exactly one Wide+ grid target, found {body.count(old_grid)}')
+    raise SystemExit(f'expected one grid target, found {body.count(old_grid)}')
 body = body.replace(old_grid, new_grid, 1)
 
-old_pill_rect = '''    : `<rect x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
+old_pill = '''    : `<rect x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
         rx="9.5" fill="none" stroke="${stateColor}" opacity="0.85"/>'''
-new_pill_rect = '''    : `<rect class="gp-pill-pulse" x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
+new_pill = '''    : `<rect class="gp-pill-pulse" x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
         rx="9.5" fill="none" stroke="${stateColor}" opacity="0.85"/>'''
-if body.count(old_pill_rect) != 1:
-    raise SystemExit(f'expected exactly one Wide+ pill target, found {body.count(old_pill_rect)}')
-body = body.replace(old_pill_rect, new_pill_rect, 1)
+if body.count(old_pill) != 1:
+    raise SystemExit(f'expected one pill target, found {body.count(old_pill)}')
+body = body.replace(old_pill, new_pill, 1)
 
 old_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goal) : ""}
   ${trace}'''
@@ -123,11 +115,11 @@ new_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goa
         stroke="${theme.grid}" stroke-width="1" opacity="0.25"/>
   ${trace}'''
 if body.count(old_trace_slot) != 1:
-    raise SystemExit(f'expected exactly one Wide+ baseline-guide target, found {body.count(old_trace_slot)}')
+    raise SystemExit(f'expected one baseline guide target, found {body.count(old_trace_slot)}')
 body = body.replace(old_trace_slot, new_trace_slot, 1)
 
-# Replace the compact single-line stats with the same four-block information
-# density as upstream monitor, but keep every block left-aligned below the ECG.
+# Reuse upstream's existing BPM cluster as the first metric. Replace only the
+# old single-line stats with three additional monitor-style blocks to its right.
 stats_pattern = re.compile(
     r'  const statsText =\n'
     r'    lay\.statsX !== null && !options\.hide\.has\("stats"\) && alive\n'
@@ -145,11 +137,6 @@ new_stats = '''  const isRepoPulse = pulse.login.includes("/");
     ? ""
     : `<text x="26" y="214" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">HEART RATE</text>
-       <text class="gp-heart" x="26" y="240" font-family="${MONO}"
-           font-size="18" fill="${theme.trace}">♥</text>
-       <text x="48" y="240" font-family="${MONO}" font-size="24"
-           font-weight="700" fill="${theme.trace}">${bpmText}<tspan font-size="10"
-           font-weight="400" fill="${theme.muted}" dx="4">bpm</tspan></text>
        <text x="190" y="214" font-family="${MONO}" font-size="9.5"
            letter-spacing="1.4" fill="${theme.muted}">${metric2Label}</text>
        <text x="190" y="240" font-family="${MONO}" font-size="24"
@@ -167,29 +154,23 @@ new_stats = '''  const isRepoPulse = pulse.login.includes("/");
   const pill ='''
 body, replaced = stats_pattern.subn(new_stats, body, count=1)
 if replaced != 1:
-    raise SystemExit(f'expected exactly one monitor-style left stats block, replaced {replaced}')
+    raise SystemExit(f'expected one left metric block target, replaced {replaced}')
 
-bpm_pattern = re.compile(
-    r'  const bpmCluster = options\.hide\.has\("bpm"\)\n'
-    r'    \? ""\n'
-    r'    : `<text class="gp-heart".*?</text>`;\n\n'
-    r'  const statusText =',
-    re.S,
-)
-body, replaced = bpm_pattern.subn('  const bpmCluster = "";\n\n  const statusText =', body, count=1)
-if replaced != 1:
-    raise SystemExit(f'expected exactly one old BPM cluster, replaced {replaced}')
+old_bpm_number = 'font-size="22" font-weight="700" fill="${theme.text}">${bpmText}'
+new_bpm_number = 'font-size="24" font-weight="700" fill="${theme.trace}">${bpmText}'
+if body.count(old_bpm_number) != 1:
+    raise SystemExit(f'expected one BPM value style target, found {body.count(old_bpm_number)}')
+body = body.replace(old_bpm_number, new_bpm_number, 1)
 
 card = card[:start] + body + card[end:]
 card_path.write_text(card)
-print('Wide+ presentation verified: 830x260, larger ECG, deeper QRS, four left metric blocks')
+print('Wide+ patch verified: larger single ECG + four left-aligned monitor metrics')
 
-# 3) Busy repo history: paginate the GraphQL history connection so dense
-# repositories are not silently truncated at the first 100 recent commits.
+# Dense repository correctness: paginate default-branch history via GraphQL.
 github_path = Path('/tmp/github-pulse/lib/github.ts')
 github = github_path.read_text()
 
-literal_replacements = [
+replacements = [
     (
         'query ($owner: String!, $name: String!, $since: GitTimestamp!, $sinceYear: GitTimestamp!) {',
         'query ($owner: String!, $name: String!, $since: GitTimestamp!, $sinceYear: GitTimestamp!, $cursor: String) {',
@@ -211,11 +192,10 @@ literal_replacements = [
         '          };',
     ),
 ]
-for i, (old_text, new_text) in enumerate(literal_replacements, start=1):
-    count = github.count(old_text)
-    if count != 1:
-        raise SystemExit(f'expected exactly one GraphQL pagination patch target {i}, found {count}')
-    github = github.replace(old_text, new_text, 1)
+for i, (old, new) in enumerate(replacements, 1):
+    if github.count(old) != 1:
+        raise SystemExit(f'expected one GraphQL patch target {i}, found {github.count(old)}')
+    github = github.replace(old, new, 1)
 
 function_pattern = re.compile(
     r'async function fetchRepoViaGraphQL\(\n'
@@ -246,9 +226,7 @@ new_function = '''async function fetchRepoViaGraphQL(
       }),
       next: { revalidate: REVALIDATE },
     });
-    if (!res.ok) {
-      throw new Error(`GitHub GraphQL ${res.status}`);
-    }
+    if (!res.ok) throw new Error(`GitHub GraphQL ${res.status}`);
     const json = (await res.json()) as RepoGraphQLResponse;
     const pageRepo = json.data?.repository;
     if (!pageRepo) {
@@ -260,10 +238,7 @@ new_function = '''async function fetchRepoViaGraphQL(
 
     if (!repoData) repoData = pageRepo;
     const pageHistory = pageRepo.defaultBranchRef?.target;
-    recentDates.push(
-      ...(pageHistory?.recent.nodes.map((n) => n.committedDate) ?? []),
-    );
-
+    recentDates.push(...(pageHistory?.recent.nodes.map((n) => n.committedDate) ?? []));
     const pageInfo = pageHistory?.recent.pageInfo;
     if (!pageInfo?.hasNextPage) break;
     if (!pageInfo.endCursor || page === 100) {
@@ -294,21 +269,10 @@ new_function = '''async function fetchRepoViaGraphQL(
 interface RestRepoMeta'''
 github, replaced = function_pattern.subn(new_function, github, count=1)
 if replaced != 1:
-    raise SystemExit(f'expected exactly one fetchRepoViaGraphQL function, replaced {replaced}')
-
-for check in [
-    '$cursor: String',
-    'history(first: 100, after: $cursor, since: $since)',
-    'pageInfo { hasNextPage endCursor }',
-    'let cursor: string | null = null;',
-    'recentDates.push(',
-    'partial: recentPartial,',
-]:
-    if check not in github:
-        raise SystemExit(f'GraphQL pagination verification missing: {check}')
+    raise SystemExit(f'expected one fetchRepoViaGraphQL function, replaced {replaced}')
 
 github_path.write_text(github)
-print('Repo history pagination patch verified: GraphQL cursor paging enabled')
+print('Repo history pagination verified')
 PY
 
 grep -Fq 'l2 -28`; // QRS complex' /tmp/github-pulse/lib/card.ts
@@ -319,8 +283,6 @@ grep -Fq 'class="gp-trail"' /tmp/github-pulse/lib/card.ts
 grep -Fq 'history(first: 100, after: $cursor, since: $since)' /tmp/github-pulse/lib/github.ts
 grep -Fq 'partial: recentPartial,' /tmp/github-pulse/lib/github.ts
 
-# Prime the TypeScript runner before a scheduled boundary so the actual SVG
-# render can begin immediately after the target time.
 npx --yes tsx --version >/dev/null
 
 if [[ -n "$target" ]]; then
@@ -350,7 +312,6 @@ fi
 
 echo "Resolved theme=$phase at $(TZ=Asia/Kuala_Lumpur date +%H:%M:%S)."
 
-# github-pulse uses GITHUB_TOKEN only for GitHub API reads during rendering.
 export GITHUB_TOKEN="$DATA_TOKEN"
 export INPUT_OUT="/tmp/pulse.svg"
 export INPUT_THEME="$phase"
@@ -370,11 +331,8 @@ fi
 npx --yes tsx /tmp/github-pulse/scripts/generate.ts
 test -s /tmp/pulse.svg
 
-# Publishing deliberately uses the caller repository's own GITHUB_TOKEN, never
-# the optional Profile data token.
 git clone --quiet --filter=blob:none "https://x-access-token:${GH_TOKEN}@github.com/${CALLER_REPO}.git" /tmp/caller
 cd /tmp/caller
-
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
