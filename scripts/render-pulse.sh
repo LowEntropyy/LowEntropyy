@@ -30,8 +30,8 @@ rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
 git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
 git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
 
-# Apply two bounded fixes to the pinned upstream source. Both patches fail
-# loudly if the expected pinned source shape changes.
+# Apply bounded correctness fixes to the pinned upstream source. All patches
+# fail loudly if the expected pinned source shape changes.
 python3 - <<'PY'
 from pathlib import Path
 import re
@@ -179,9 +179,104 @@ github_path.write_text(github)
 print('Repo history pagination patch verified: GraphQL cursor paging enabled')
 PY
 
+# 3) Wide+ presentation: keep one full-width ECG and the original left-side
+# data hierarchy, but use the 830x260 canvas. Extra motion stays on the same
+# ECG trace (soft trail + bright sweep) with subtle grid/state breathing.
+python3 - <<'PY'
+from pathlib import Path
+
+path = Path('/tmp/github-pulse/lib/card.ts')
+text = path.read_text()
+
+old_layout = '''  wide: {
+    w: 830, h: 150, waveX0: 26, waveX1: 804, baseline: 74, ampMax: 30,
+    bandTop: 38, bandH: 72, headerY: 26, pillY: 12, footerY: 130, statsX: 150,
+  },'''
+new_layout = '''  wide: {
+    w: 830, h: 260, waveX0: 26, waveX1: 804, baseline: 132, ampMax: 40,
+    bandTop: 54, bandH: 150, headerY: 32, pillY: 18, footerY: 238, statsX: 160,
+  },'''
+if text.count(old_layout) != 1:
+    raise SystemExit(f'expected exactly one Wide+ layout target, found {text.count(old_layout)}')
+text = text.replace(old_layout, new_layout, 1)
+
+start = text.index('function renderCardAtSize(')
+end = text.index('/**\n * Duet card:', start)
+body = text[start:end]
+
+old_anim = '''      ? `.gp-sweep{animation:gp-sweep ${round(sweepDur)}s linear infinite}
+       .gp-heart{animation:gp-thump ${round(period)}s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+       .gp-dot{animation:gp-blink ${dotPeriod(pulse, options)}s ease-in-out infinite}
+       @keyframes gp-sweep{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+       @keyframes gp-thump{0%,100%{transform:scale(1)}15%{transform:scale(1.32)}30%{transform:scale(1)}}
+       @keyframes gp-blink{50%{opacity:.25}}${options.wave === "bars" ? EQ_CSS(options.speed) : ""}`'''
+new_anim = '''      ? `.gp-trail{animation:gp-sweep ${round(sweepDur)}s linear infinite}
+       .gp-sweep{animation:gp-sweep ${round(sweepDur)}s linear infinite}
+       .gp-grid-pulse{animation:gp-grid-breathe ${round(Math.max(5, sweepDur * 1.8))}s ease-in-out infinite}
+       .gp-pill-pulse{animation:gp-pill-breathe 4.8s ease-in-out infinite}
+       .gp-heart{animation:gp-thump ${round(period)}s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+       .gp-dot{animation:gp-blink ${dotPeriod(pulse, options)}s ease-in-out infinite}
+       @keyframes gp-sweep{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
+       @keyframes gp-grid-breathe{0%,100%{opacity:.72}50%{opacity:.96}}
+       @keyframes gp-pill-breathe{0%,100%{opacity:.72}50%{opacity:1}}
+       @keyframes gp-thump{0%,100%{transform:scale(1)}15%{transform:scale(1.32)}30%{transform:scale(1)}}
+       @keyframes gp-blink{50%{opacity:.25}}${options.wave === "bars" ? EQ_CSS(options.speed) : ""}`'''
+if body.count(old_anim) != 1:
+    raise SystemExit(f'expected exactly one Wide+ animation target, found {body.count(old_anim)}')
+body = body.replace(old_anim, new_anim, 1)
+
+old_trace = '''      ? `<path d="${path}" fill="none" stroke="${strokeRef}" stroke-width="1.6" opacity="0.22"/>
+       <path class="gp-sweep" d="${path}" pathLength="1000" fill="none"
+             stroke="${strokeRef}" stroke-width="2.2" stroke-linecap="round"
+             stroke-dasharray="140 860" ${glowFilter}/>`'''
+new_trace = '''      ? `<path d="${path}" fill="none" stroke="${strokeRef}" stroke-width="1.6" opacity="0.18"/>
+       <path class="gp-trail" d="${path}" pathLength="1000" fill="none"
+             stroke="${strokeRef}" stroke-width="4.8" stroke-linecap="round"
+             stroke-dasharray="240 760" opacity="0.10" ${glowFilter}/>
+       <path class="gp-sweep" d="${path}" pathLength="1000" fill="none"
+             stroke="${strokeRef}" stroke-width="2.4" stroke-linecap="round"
+             stroke-dasharray="88 912" ${glowFilter}/>`'''
+if body.count(old_trace) != 1:
+    raise SystemExit(f'expected exactly one Wide+ trace target, found {body.count(old_trace)}')
+body = body.replace(old_trace, new_trace, 1)
+
+old_grid = '''      }" height="${lay.bandH}" fill="url(#gp-grid)" opacity="0.9"/>`'''
+new_grid = '''      }" height="${lay.bandH}" fill="url(#gp-grid)" opacity="0.9" class="gp-grid-pulse"/>`'''
+if body.count(old_grid) != 1:
+    raise SystemExit(f'expected exactly one Wide+ grid target, found {body.count(old_grid)}')
+body = body.replace(old_grid, new_grid, 1)
+
+old_pill_rect = '''    : `<rect x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
+        rx="9.5" fill="none" stroke="${stateColor}" opacity="0.85"/>'''
+new_pill_rect = '''    : `<rect class="gp-pill-pulse" x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
+        rx="9.5" fill="none" stroke="${stateColor}" opacity="0.85"/>'''
+if body.count(old_pill_rect) != 1:
+    raise SystemExit(f'expected exactly one Wide+ pill target, found {body.count(old_pill_rect)}')
+body = body.replace(old_pill_rect, new_pill_rect, 1)
+
+old_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goal) : ""}
+  ${trace}'''
+new_trace_slot = '''  ${options.goal ? goalMarkup(pulse, lay, theme, options.goal) : ""}
+  <line x1="${lay.waveX0}" y1="${lay.baseline}" x2="${lay.waveX1}" y2="${lay.baseline}"
+        stroke="${theme.grid}" stroke-width="1" opacity="0.28"/>
+  ${trace}'''
+if body.count(old_trace_slot) != 1:
+    raise SystemExit(f'expected exactly one Wide+ baseline-guide target, found {body.count(old_trace_slot)}')
+body = body.replace(old_trace_slot, new_trace_slot, 1)
+
+body = body.replace('font-size="10.5" fill="${theme.muted}">${esc(statsLeft)}</text>',
+                    'font-size="11.5" fill="${theme.muted}">${esc(statsLeft)}</text>', 1)
+
+text = text[:start] + body + text[end:]
+path.write_text(text)
+print('Wide+ visual patch verified: 830x260 single ECG, left stats, layered same-trace motion')
+PY
+
 grep -Fq 'l2 -11`; // QRS complex' /tmp/github-pulse/lib/card.ts
 grep -Fq 'history(first: 100, after: $cursor, since: $since)' /tmp/github-pulse/lib/github.ts
 grep -Fq 'partial: recentPartial,' /tmp/github-pulse/lib/github.ts
+grep -Fq 'w: 830, h: 260, waveX0: 26, waveX1: 804, baseline: 132' /tmp/github-pulse/lib/card.ts
+grep -Fq 'class="gp-trail"' /tmp/github-pulse/lib/card.ts
 
 # Prime the small TypeScript runner before a scheduled boundary so the actual
 # SVG render can begin immediately after the target time.
@@ -218,9 +313,7 @@ echo "Resolved theme=$phase at $(TZ=Asia/Kuala_Lumpur date +%H:%M:%S)."
 export GITHUB_TOKEN="$DATA_TOKEN"
 export INPUT_OUT="/tmp/pulse.svg"
 export INPUT_THEME="$phase"
-# Trial the upstream monitor layout: 830x260 with multi-speed sweeps and
-# dedicated secondary traces, while retaining the central correctness fixes.
-export INPUT_SIZE="monitor"
+export INPUT_SIZE="wide"
 export INPUT_DAYS="$DAYS"
 export INPUT_PARAMS="w=full&tz=8&label=$LABEL"
 
