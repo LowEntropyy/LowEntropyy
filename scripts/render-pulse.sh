@@ -218,7 +218,9 @@ echo "Resolved theme=$phase at $(TZ=Asia/Kuala_Lumpur date +%H:%M:%S)."
 export GITHUB_TOKEN="$DATA_TOKEN"
 export INPUT_OUT="/tmp/pulse.svg"
 export INPUT_THEME="$phase"
-export INPUT_SIZE="wide"
+# Trial the upstream monitor layout: 830x260 with multi-speed sweeps and
+# dedicated secondary traces, while retaining the central correctness fixes.
+export INPUT_SIZE="monitor"
 export INPUT_DAYS="$DAYS"
 export INPUT_PARAMS="w=full&tz=8&label=$LABEL"
 
