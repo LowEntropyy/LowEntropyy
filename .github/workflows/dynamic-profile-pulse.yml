@@ -51,4 +51,25 @@ jobs:
         run: |
           rm -rf /tmp/pulse-control
           git clone --quiet --depth 1 --branch main https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
-          bash /tmp/pulse-control/scripts/render-pulse.sh
+
+          # Keep the central renderer's theme/data/pagination behavior intact.
+          # Inject the Profile-only geometry pass after SVG generation and before
+          # the renderer publishes pulse-assets, so each refresh remains one commit.
+          python3 - <<'PY'
+          from pathlib import Path
+
+          source = Path('/tmp/pulse-control/scripts/render-pulse.sh')
+          target = Path('/tmp/render-profile-pulse.sh')
+          text = source.read_text()
+          needle = 'test -s /tmp/pulse.svg\n'
+          if text.count(needle) != 1:
+              raise SystemExit('expected one pulse SVG verification hook')
+          text = text.replace(
+              needle,
+              needle + 'python3 /tmp/pulse-control/scripts/postprocess-profile-pulse.py /tmp/pulse.svg\n',
+              1,
+          )
+          target.write_text(text)
+          PY
+
+          bash /tmp/render-profile-pulse.sh
