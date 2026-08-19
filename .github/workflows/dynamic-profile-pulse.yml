@@ -53,8 +53,8 @@ jobs:
           git clone --quiet --depth 1 --branch main https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
 
           # Keep the central renderer's theme/data/pagination behavior intact.
-          # Inject the Profile-only geometry pass after SVG generation and before
-          # the renderer publishes pulse-assets, so each refresh remains one commit.
+          # Inject the Profile-only geometry pass and BPM-driven heartbeat speed
+          # after SVG generation and before publishing pulse-assets.
           python3 - <<'PY'
           from pathlib import Path
 
@@ -64,11 +64,36 @@ jobs:
           needle = 'test -s /tmp/pulse.svg\n'
           if text.count(needle) != 1:
               raise SystemExit('expected one pulse SVG verification hook')
-          text = text.replace(
-              needle,
-              needle + 'python3 /tmp/pulse-control/scripts/postprocess-profile-pulse.py /tmp/pulse.svg\n',
-              1,
+
+          profile_steps = '''python3 /tmp/pulse-control/scripts/postprocess-profile-pulse.py /tmp/pulse.svg
+          python3 - <<'PY_HEART'
+          from pathlib import Path
+          import re
+
+          path = Path('/tmp/pulse.svg')
+          svg = path.read_text()
+          bpm_match = re.search(r'<title[^>]*>.*?—\s*([0-9]+)\s*bpm', svg)
+          if not bpm_match:
+              raise SystemExit('profile pulse heart speed: BPM not found')
+
+          bpm = max(1.0, float(bpm_match.group(1)))
+          duration = max(0.62, min(1.65, 120.0 / bpm))
+          heart_rule = re.compile(
+              r'(\.gp-heart\{animation:gp-thump )[0-9.]+(s ease-in-out infinite;transform-origin:center;transform-box:fill-box\})'
           )
+          svg, count = heart_rule.subn(
+              lambda m: m.group(1) + f'{duration:.3f}'.rstrip('0').rstrip('.') + m.group(2),
+              svg,
+              count=1,
+          )
+          if count != 1:
+              raise SystemExit(f'profile pulse heart speed: expected one gp-heart rule, found {count}')
+
+          path.write_text(svg)
+          print(f'Profile Pulse heart speed verified: bpm={bpm:g}, duration={duration:.3f}s')
+          PY_HEART
+          '''
+          text = text.replace(needle, needle + profile_steps, 1)
           target.write_text(text)
           PY
 
