@@ -27,20 +27,31 @@ svg = path.read_text()
 if 'viewBox="0 0 830 260"' not in svg:
     fail("expected 830x260 Wide+ SVG")
 
-# Profile-only composition: keep the account heading at the global top-left,
-# but turn the metrics into a genuinely narrow, symmetric monitor rail.
+# Profile-only composition: one compact left-aligned vitals rail. Every module
+# shares the same label/value axis and cadence; HEART RATE is not a special
+# centered composition anymore.
 svg = replace_once(svg, 'x="26" y="32"', 'x="22" y="30"', "header")
 
+# Remove the oversized animated heart glyph from the rail. The rate itself is
+# the visual anchor; the old glyph forced the first module onto a different axis.
+svg, heart_count = re.subn(
+    r'\s*<text class="gp-heart" x="26" y="98"[\s\S]*?</text>\n',
+    '\n',
+    svg,
+    count=1,
+)
+if heart_count != 1:
+    fail(f"expected one rail heart glyph, found {heart_count}")
+
 rail_positions = [
-    ('x="26" y="72"', 'x="77" y="64" text-anchor="middle"', "heart-rate label"),
-    ('x="26" y="98"', 'x="32" y="89"', "heart icon"),
-    ('x="48" y="98"', 'x="56" y="89"', "heart-rate value"),
-    ('x="26" y="120"', 'x="77" y="108" text-anchor="middle"', "merges label"),
-    ('x="26" y="146"', 'x="77" y="133" text-anchor="middle"', "merges value"),
-    ('x="26" y="168"', 'x="77" y="152" text-anchor="middle"', "reviews label"),
-    ('x="26" y="194"', 'x="77" y="177" text-anchor="middle"', "reviews value"),
-    ('x="26" y="216"', 'x="77" y="196" text-anchor="middle"', "streak label"),
-    ('x="26" y="242"', 'x="77" y="221" text-anchor="middle"', "streak value"),
+    ('x="26" y="72"', 'x="22" y="62"', "heart-rate label"),
+    ('x="48" y="98"', 'x="22" y="88"', "heart-rate value"),
+    ('x="26" y="120"', 'x="22" y="105"', "merges label"),
+    ('x="26" y="146"', 'x="22" y="131"', "merges value"),
+    ('x="26" y="168"', 'x="22" y="148"', "reviews label"),
+    ('x="26" y="194"', 'x="22" y="174"', "reviews value"),
+    ('x="26" y="216"', 'x="22" y="191"', "streak label"),
+    ('x="26" y="242"', 'x="22" y="217"', "streak value"),
 ]
 for old, new, label in rail_positions:
     svg = replace_once(svg, old, new, label)
@@ -226,7 +237,7 @@ svg = replace_once(
 
 path.write_text(svg)
 print(
-    "Profile Pulse postprocess verified: centered 142px vitals rail; "
+    "Profile Pulse postprocess verified: left-aligned 142px vitals rail; "
     f"monitor ECG x={fmt(TARGET_X0)}..{fmt(TARGET_X1)}; "
     f"{len(amplitude_sets[0])} P-QRS-T beats; one dominant R; "
     f"level baseline y={fmt(BASELINE)}"
