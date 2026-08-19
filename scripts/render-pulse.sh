@@ -101,6 +101,13 @@ if body.count(old_grid) != 1:
     raise SystemExit(f'expected one grid target, found {body.count(old_grid)}')
 body = body.replace(old_grid, new_grid, 1)
 
+# Keep state chrome anchored to the outer card edge, not the ECG field edge.
+old_pill_x = '  const pillX = lay.w - lay.waveX0 - pillW;'
+new_pill_x = '  const pillX = lay.w - 26 - pillW;'
+if body.count(old_pill_x) != 1:
+    raise SystemExit(f'expected one pill-x target, found {body.count(old_pill_x)}')
+body = body.replace(old_pill_x, new_pill_x, 1)
+
 old_pill = '''    : `<rect x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
         rx="9.5" fill="none" stroke="${stateColor}" opacity="0.85"/>'''
 new_pill = '''    : `<rect class="gp-pill-pulse" x="${round(pillX)}" y="${lay.pillY}" width="${round(pillW)}" height="19"
@@ -184,6 +191,12 @@ bpm_pattern = re.compile(
 body, replaced = bpm_pattern.subn('  const bpmCluster = "";\n\n  const statusText =', body, count=1)
 if replaced != 1:
     raise SystemExit(f'expected one BPM cluster target, replaced {replaced}')
+
+old_status_x = '    : `<text x="${lay.w - lay.waveX0}" y="${lay.footerY - 2}" text-anchor="end"'
+new_status_x = '    : `<text x="${lay.w - 26}" y="${lay.footerY - 2}" text-anchor="end"'
+if body.count(old_status_x) != 1:
+    raise SystemExit(f'expected one status-x target, found {body.count(old_status_x)}')
+body = body.replace(old_status_x, new_status_x, 1)
 
 card = card[:start] + body + card[end:]
 card_path.write_text(card)
