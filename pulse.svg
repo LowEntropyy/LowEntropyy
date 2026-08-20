@@ -66,7 +66,7 @@
            letter-spacing="1.4" fill="#8A7B67">STREAK · TYPE</text>
        <text x="612" y="246" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
            font-weight="700" fill="#2A2118">9d<tspan
-           fill="#8A7B67" font-size="16" dx="8">PY+</tspan></text>
+           fill="#8A7B67" font-size="16" dx="8">SH+</tspan></text>
   <text x="808" y="198" text-anchor="end"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#C4452F"
         class="gp-dot">● beating now</text>
