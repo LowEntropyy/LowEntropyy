@@ -36,11 +36,10 @@ jobs:
   pulse:
     runs-on: ubuntu-latest
     steps:
-      - name: Run central pulse renderer
+      - name: Run unified pulse renderer
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          # User-scoped read:user token: data reads only; never used for publishing.
           DATA_TOKEN: ${{ secrets.PROFILE_PULSE_TOKEN }}
           CALLER_REPO: ${{ github.repository }}
           EVENT_SCHEDULE: ${{ github.event.schedule }}
@@ -51,27 +50,4 @@ jobs:
         run: |
           rm -rf /tmp/pulse-control
           git clone --quiet --depth 1 --branch main https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
-
-          # Keep the central renderer's theme/data/pagination behavior intact.
-          # After Profile geometry is applied, bind the compact heart's animation
-          # duration to the rendered BPM before pulse-assets is published.
-          python3 - <<'PY'
-          from pathlib import Path
-
-          source = Path('/tmp/pulse-control/scripts/render-pulse.sh')
-          target = Path('/tmp/render-profile-pulse.sh')
-          text = source.read_text()
-          needle = 'test -s /tmp/pulse.svg\n'
-          if text.count(needle) != 1:
-              raise SystemExit('expected one pulse SVG verification hook')
-
-          bpm_speed = 'python3 -c \'from pathlib import Path; import re; p=Path("/tmp/pulse.svg"); s=p.read_text(); m=re.search(r"<title[^>]*>.*?—\\s*([0-9]+)\\s*bpm", s); assert m, "BPM not found"; bpm=max(1.0,float(m.group(1))); d=max(0.62,min(1.65,120.0/bpm)); pat=re.compile(r"(\\.gp-heart\\{animation:gp-thump )[0-9.]+(s ease-in-out infinite;transform-origin:center;transform-box:fill-box\\})"); s,n=pat.subn(lambda x:x.group(1)+format(d,".3f").rstrip("0").rstrip(".")+x.group(2),s,count=1); assert n==1, f"expected one gp-heart rule, found {n}"; p.write_text(s); print(f"Profile Pulse heart speed verified: bpm={bpm:g}, duration={d:.3f}s")\'\n'
-          profile_steps = (
-              'python3 /tmp/pulse-control/scripts/postprocess-profile-pulse.py /tmp/pulse.svg\n'
-              + bpm_speed
-          )
-          text = text.replace(needle, needle + profile_steps, 1)
-          target.write_text(text)
-          PY
-
-          bash /tmp/render-profile-pulse.sh
+          bash /tmp/pulse-control/scripts/run-pulse.sh
