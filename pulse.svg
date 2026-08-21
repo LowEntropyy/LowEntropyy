@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 227 contributions this week, 569 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 237 contributions this week, 579 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
@@ -20,55 +20,55 @@
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <pattern id="gp-grid" width="26" height="26" patternUnits="userSpaceOnUse">
-      <path d="M26 0H0V26" fill="none" stroke="rgba(196,69,47,0.14)" stroke-width="1"/>
+      <path d="M26 0H0V26" fill="none" stroke="rgba(136,192,208,0.10)" stroke-width="1"/>
     </pattern>
   </defs>
 
   <rect x="0.5" y="0.5" width="829" height="259"
-        rx="12" fill="#F6EFE3" stroke="rgba(196,69,47,0.14)"/>
+        rx="12" fill="#2E3440" stroke="rgba(136,192,208,0.10)"/>
   <rect x="22" y="42" width="786" height="148" fill="url(#gp-grid)" opacity="0.9" class="gp-grid-pulse"/>
 
   <rect class="gp-pill-pulse" x="741.8" y="18" width="66.2" height="19"
-        rx="9.5" fill="none" stroke="#C4452F" opacity="0.85"/>
+        rx="9.5" fill="none" stroke="#88C0D0" opacity="0.85"/>
   <text x="774.9" y="31" text-anchor="middle"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10" font-weight="600"
-        fill="#C4452F" letter-spacing="1">RADIANT</text>
+        fill="#88C0D0" letter-spacing="1">RADIANT</text>
   
-  <line x1="22" y1="207" x2="808" y2="207" stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.55"/>
+  <line x1="22" y1="207" x2="808" y2="207" stroke="rgba(136,192,208,0.10)" stroke-width="1" opacity="0.55"/>
   <line x1="22" y1="126" x2="808" y2="126"
-        stroke="rgba(196,69,47,0.14)" stroke-width="1" opacity="0.25"/>
-  <path d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -17.398 l14 19.398 l3 -6 h3 q4 -13.491 8 0 h5.231 H808" fill="none" stroke="#C4452F" stroke-width="1.8" opacity="0.40"/>
-       <path class="gp-trail" d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -17.398 l14 19.398 l3 -6 h3 q4 -13.491 8 0 h5.231 H808" pathLength="1000" fill="none"
-             stroke="#C4452F" stroke-width="4.0" stroke-linecap="round"
+        stroke="rgba(136,192,208,0.10)" stroke-width="1" opacity="0.25"/>
+  <path d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -23.474 l14 25.474 l3 -6 h3 q4 -14.286 8 0 h5.231 H808" fill="none" stroke="#88C0D0" stroke-width="1.8" opacity="0.40"/>
+       <path class="gp-trail" d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -23.474 l14 25.474 l3 -6 h3 q4 -14.286 8 0 h5.231 H808" pathLength="1000" fill="none"
+             stroke="#88C0D0" stroke-width="4.0" stroke-linecap="round"
              stroke-dasharray="170 830" opacity="0.07" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -17.398 l14 19.398 l3 -6 h3 q4 -13.491 8 0 h5.231 H808" pathLength="1000" fill="none"
-             stroke="#C4452F" stroke-width="2.6" stroke-linecap="round"
+       <path class="gp-sweep" d="M22 126 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.631 l14 17.631 l3 -6 h3 q4 -13.098 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -14.407 l14 16.407 l3 -6 h3 q4 -12.616 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.359 l14 17.359 l3 -6 h3 q4 -13.018 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -22.033 l14 24.033 l3 -6 h3 q4 -14.134 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -15.898 l14 17.898 l3 -6 h3 q4 -13.17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.839 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -47.815 l14 49.815 l3 -6 h3 q4 -15.884 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -30.063 l14 32.063 l3 -6 h3 q4 -14.848 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -36.049 l14 38.049 l3 -6 h3 q4 -15.25 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -27.973 l14 29.973 l3 -6 h3 q4 -14.688 8 0 h5.231 h5.231 q3 -5.5 6 0 h2 l2 4 l12 -23.474 l14 25.474 l3 -6 h3 q4 -14.286 8 0 h5.231 H808" pathLength="1000" fill="none"
+             stroke="#88C0D0" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="170 830" filter="url(#gp-glow)"/>
   
   
   
   <text x="36" y="222" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
-           letter-spacing="1.4" fill="#8A7B67">HEART RATE</text>
+           letter-spacing="1.4" fill="#8791A3">HEART RATE</text>
        <text class="gp-heart" x="22" y="222" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
-           font-size="11.5" fill="#C4452F">♥</text>
+           font-size="11.5" fill="#88C0D0">♥</text>
        <text x="22" y="246" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#C4452F">180<tspan font-size="10"
-           font-weight="400" fill="#8A7B67" dx="4">bpm</tspan></text>
+           font-weight="700" fill="#88C0D0">180<tspan font-size="10"
+           font-weight="400" fill="#8791A3" dx="4">bpm</tspan></text>
        <text x="219" y="222" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
-           letter-spacing="1.4" fill="#8A7B67">MERGES / YR</text>
+           letter-spacing="1.4" fill="#8791A3">MERGES / YR</text>
        <text x="219" y="246" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#C4452F">79</text>
+           font-weight="700" fill="#88C0D0">83</text>
        <text x="415" y="222" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
-           letter-spacing="1.4" fill="#8A7B67">REVIEWS / YR</text>
+           letter-spacing="1.4" fill="#8791A3">REVIEWS / YR</text>
        <text x="415" y="246" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#A96A00">4</text>
+           font-weight="700" fill="#EBCB8B">4</text>
        <text x="612" y="222" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
-           letter-spacing="1.4" fill="#8A7B67">STREAK · TYPE</text>
+           letter-spacing="1.4" fill="#8791A3">STREAK · TYPE</text>
        <text x="612" y="246" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#2A2118">10d<tspan
-           fill="#8A7B67" font-size="16" dx="8">SH+</tspan></text>
+           font-weight="700" fill="#ECEFF4">10d<tspan
+           fill="#8791A3" font-size="16" dx="8">SH+</tspan></text>
   <text x="808" y="198" text-anchor="end"
-        font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#C4452F"
+        font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#88C0D0"
         class="gp-dot">● beating now</text>
   
   
