@@ -7,6 +7,14 @@ postprocessor="$script_dir/postprocess-pulse.py"
 flatline_postprocessor="$script_dir/postprocess-flatline.py"
 target="/tmp/render-pulse-unified.sh"
 
+# The profile card is expected to include authenticated/private contribution
+# data. Never silently fall back to the per-repository GITHUB_TOKEN in user mode,
+# because that can produce a plausible but materially incomplete profile pulse.
+if [[ "${MODE:-}" == "user" && -z "${DATA_TOKEN:-}" ]]; then
+  echo "DATA_TOKEN is required for user-mode Profile Pulse" >&2
+  exit 2
+fi
+
 python3 - "$source_script" "$target" "$postprocessor" "$flatline_postprocessor" <<'PY'
 from pathlib import Path
 import shlex
