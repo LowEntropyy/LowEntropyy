@@ -4,21 +4,29 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source_script="$script_dir/render-pulse.sh"
 postprocessor="$script_dir/postprocess-pulse.py"
+flatline_postprocessor="$script_dir/postprocess-flatline.py"
 target="/tmp/render-pulse-unified.sh"
 
-python3 - "$source_script" "$target" "$postprocessor" <<'PY'
+python3 - "$source_script" "$target" "$postprocessor" "$flatline_postprocessor" <<'PY'
 from pathlib import Path
 import shlex
 import sys
 
 source = Path(sys.argv[1])
 target = Path(sys.argv[2])
-postprocessor = sys.argv[3]
+postprocessor = shlex.quote(sys.argv[3])
+flatline_postprocessor = shlex.quote(sys.argv[4])
 text = source.read_text()
 needle = 'test -s /tmp/pulse.svg\n'
 if text.count(needle) != 1:
     raise SystemExit('expected one pulse SVG verification hook')
-command = f'python3 {shlex.quote(postprocessor)} /tmp/pulse.svg "$MODE"\n'
+command = (
+    'if grep -qi "flatlined" /tmp/pulse.svg; then\n'
+    f'  python3 {flatline_postprocessor} /tmp/pulse.svg "$MODE"\n'
+    'else\n'
+    f'  python3 {postprocessor} /tmp/pulse.svg "$MODE"\n'
+    'fi\n'
+)
 text = text.replace(needle, needle + command, 1)
 target.write_text(text)
 PY
