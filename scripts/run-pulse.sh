@@ -27,6 +27,33 @@ postprocessor = shlex.quote(sys.argv[3])
 flatline_postprocessor = shlex.quote(sys.argv[4])
 vitals_alignment = shlex.quote(sys.argv[5])
 text = source.read_text()
+
+# Keep the same four-column vitals contract for flatlined cards. The upstream
+# renderer normally suppresses stats when alive=false and prints an em dash for
+# BPM; our card should instead remain structurally stable and show truthful 0 BPM.
+source_edits = (
+    (
+        '  const statsText = !alive || options.hide.has("stats")\n    ? ""',
+        '  const statsText = options.hide.has("stats")\n    ? ""',
+        'flatline stats visibility',
+    ),
+    (
+        'font-size="18" fill="${theme.trace}">♥</text>',
+        'font-size="18" fill="${alive ? theme.trace : theme.danger}">♥</text>',
+        'flatline heart color',
+    ),
+    (
+        'font-weight="700" fill="${theme.trace}">${bpmText}<tspan',
+        'font-weight="700" fill="${alive ? theme.trace : theme.danger}">${pulse.bpm}<tspan',
+        'flatline bpm value',
+    ),
+)
+for old, new, label in source_edits:
+    count = text.count(old)
+    if count != 1:
+        raise SystemExit(f'expected one {label} target, found {count}')
+    text = text.replace(old, new, 1)
+
 needle = 'test -s /tmp/pulse.svg\n'
 if text.count(needle) != 1:
     raise SystemExit('expected one pulse SVG verification hook')
