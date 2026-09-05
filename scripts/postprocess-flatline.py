@@ -27,10 +27,11 @@ if 'viewBox="0 0 830 260"' not in svg:
     fail("expected 830x260 Wide+ SVG")
 if not re.search(r'<title[^>]*>[^<]*flatlined', svg, re.IGNORECASE):
     fail("flatline title not found")
-if "HEART RATE" in svg:
-    fail("flatline unexpectedly contained active vitals")
+if "HEART RATE" not in svg:
+    fail("flatline vitals row missing")
 
-# Profile cards omit the account heading; repository cards keep their label.
+# Profile does not repeat the account heading inside the card; repository cards
+# keep their label at the global top-left.
 if mode == "user":
     svg, header_count = re.subn(
         r'\s*<text x="26" y="32"[\s\S]*?</text>\n',
@@ -41,14 +42,54 @@ if mode == "user":
     if header_count != 1:
         fail(f"expected one in-card account heading, found {header_count}")
 
-# A provider flatline is structurally different from an active card: it has one
-# resting trace and no heartbeat/vitals animation. Keep that semantic state while
-# applying the same final full-width monitor geometry used by active cards.
+# Keep the four-column vitals strip even in a true flatline. The heart glyph is
+# static because the flatline CSS contains no gp-heart animation; 0 BPM remains
+# truthful while OPEN PRS / OPEN ISSUES / STREAK · TYPE stay available.
+heart_re = re.compile(
+    r'<text class="gp-heart" x="26" y="98"(?P<attrs>[\s\S]*?)font-size="18"(?P<tail>[\s\S]*?)>♥</text>'
+)
+if not heart_re.search(svg):
+    fail("expected one flatline heart glyph")
+svg, heart_count = heart_re.subn(
+    lambda m: (
+        '<text class="gp-heart" x="22" y="222"'
+        + m.group('attrs')
+        + 'font-size="11.5"'
+        + m.group('tail')
+        + '>♥</text>'
+    ),
+    svg,
+    count=1,
+)
+if heart_count != 1:
+    fail(f"expected one flatline heart glyph, found {heart_count}")
+
+strip_positions = [
+    ('x="26" y="72"', 'x="36" y="222"', "heart-rate label"),
+    ('x="48" y="98"', 'x="22" y="246"', "heart-rate value"),
+    ('x="26" y="120"', 'x="219" y="222"', "metric-2 label"),
+    ('x="26" y="146"', 'x="219" y="246"', "metric-2 value"),
+    ('x="26" y="168"', 'x="415" y="222"', "metric-3 label"),
+    ('x="26" y="194"', 'x="415" y="246"', "metric-3 value"),
+    ('x="26" y="216"', 'x="612" y="222"', "streak label"),
+    ('x="26" y="242"', 'x="612" y="246"', "streak value"),
+]
+for old, new, label in strip_positions:
+    svg = replace_once(svg, old, new, label)
+
+# Apply the same final full-width monitor geometry as active cards while
+# preserving the single resting flatline trace.
 svg = replace_once(
     svg,
     'x="200" y="48" width="614" height="160"',
     'x="22" y="42" width="786" height="148"',
     "ECG grid",
+)
+svg = replace_once(
+    svg,
+    'x1="190" y1="48" x2="190" y2="244"',
+    'x1="22" y1="207" x2="808" y2="207"',
+    "bottom strip divider",
 )
 svg = replace_once(
     svg,
@@ -68,16 +109,6 @@ svg = replace_once(
     '<feGaussianBlur stdDeviation="1.7" result="b"/>',
     "ECG glow blur",
 )
-
-# There is no bottom vitals strip in a true flatline, so remove the old vertical
-# rail divider instead of converting it into an empty horizontal strip.
-divider_re = re.compile(
-    r'\s*<line x1="190" y1="48" x2="190" y2="244" '
-    r'stroke="[^"]+" stroke-width="1" opacity="0\.55"/>\n?'
-)
-svg, divider_count = divider_re.subn('\n', svg, count=1)
-if divider_count != 1:
-    fail(f"expected one legacy divider, found {divider_count}")
 
 # Keep state chrome aligned to the final 22..808 monitor bounds.
 pill_re = re.compile(
@@ -122,6 +153,12 @@ for forbidden in (
         fail(f"legacy flatline geometry survived: {forbidden}")
 if svg.count('class="gp-flat"') != 1:
     fail("expected exactly one flatline trace")
+if svg.count('♥') != 1 or svg.count('class="gp-heart"') != 1:
+    fail("expected exactly one static flatline heart accent")
+if '>0<tspan font-size="10"' not in svg:
+    fail("flatline heart rate did not render as 0 bpm")
 
 path.write_text(svg)
-print(f"Pulse flatline postprocess verified: mode={mode}; full-width resting ECG; bpm=0")
+print(
+    f"Pulse flatline postprocess verified: mode={mode}; full-width resting ECG + bottom vitals; bpm=0"
+)
