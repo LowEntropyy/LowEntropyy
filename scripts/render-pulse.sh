@@ -354,6 +354,9 @@ export INPUT_THEME="$phase"
 export INPUT_SIZE="wide"
 export INPUT_DAYS="$DAYS"
 export INPUT_PARAMS="w=full&tz=8&label=$LABEL"
+if [[ "$phase" == "paper" ]]; then
+  export INPUT_PARAMS="${INPUT_PARAMS}&bg=f5f5f5"
+fi
 
 if [[ "$MODE" == "repo" ]]; then
   export INPUT_REPO="$SUBJECT"
