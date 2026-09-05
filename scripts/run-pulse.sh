@@ -5,6 +5,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source_script="$script_dir/render-pulse.sh"
 postprocessor="$script_dir/postprocess-pulse.py"
 flatline_postprocessor="$script_dir/postprocess-flatline.py"
+vitals_alignment="$script_dir/align-pulse-vitals.py"
 target="/tmp/render-pulse-unified.sh"
 
 # The profile card is expected to include authenticated/private contribution
@@ -15,7 +16,7 @@ if [[ "${MODE:-}" == "user" && -z "${DATA_TOKEN:-}" ]]; then
   exit 2
 fi
 
-python3 - "$source_script" "$target" "$postprocessor" "$flatline_postprocessor" <<'PY'
+python3 - "$source_script" "$target" "$postprocessor" "$flatline_postprocessor" "$vitals_alignment" <<'PY'
 from pathlib import Path
 import shlex
 import sys
@@ -24,6 +25,7 @@ source = Path(sys.argv[1])
 target = Path(sys.argv[2])
 postprocessor = shlex.quote(sys.argv[3])
 flatline_postprocessor = shlex.quote(sys.argv[4])
+vitals_alignment = shlex.quote(sys.argv[5])
 text = source.read_text()
 needle = 'test -s /tmp/pulse.svg\n'
 if text.count(needle) != 1:
@@ -34,6 +36,7 @@ command = (
     'else\n'
     f'  python3 {postprocessor} /tmp/pulse.svg "$MODE"\n'
     'fi\n'
+    f'python3 {vitals_alignment} /tmp/pulse.svg\n'
 )
 text = text.replace(needle, needle + command, 1)
 target.write_text(text)
