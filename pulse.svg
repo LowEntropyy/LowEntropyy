@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
-  <title id="gp-title">LowEntropyy's pulse — 90 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 18 contributions this week, 973 in the last year.</desc>
-  <style>.gp-trail{animation:gp-sweep 4s linear infinite}
-       .gp-sweep{animation:gp-sweep 4s linear infinite}
-       .gp-grid-pulse{animation:gp-grid-breathe 7.2s ease-in-out infinite}
+  <title id="gp-title">LowEntropyy's pulse — 96 bpm (radiant)</title>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 20 contributions this week, 975 in the last year.</desc>
+  <style>.gp-trail{animation:gp-sweep 3.8s linear infinite}
+       .gp-sweep{animation:gp-sweep 3.8s linear infinite}
+       .gp-grid-pulse{animation:gp-grid-breathe 6.8s ease-in-out infinite}
        .gp-pill-pulse{animation:gp-pill-breathe 4.8s ease-in-out infinite}
-       .gp-heart{animation:gp-thump 1.333s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+       .gp-heart{animation:gp-thump 1.25s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
        .gp-dot{animation:gp-blink 1.8s ease-in-out infinite}
        @keyframes gp-sweep{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
        @keyframes gp-grid-breathe{0%,100%{opacity:.72}50%{opacity:.96}}
@@ -37,11 +37,11 @@
   <line x1="22" y1="207" x2="808" y2="207" stroke="rgba(47,212,238,0.09)" stroke-width="1" opacity="0.55"/>
   <line x1="22" y1="126" x2="808" y2="126"
         stroke="rgba(47,212,238,0.09)" stroke-width="1" opacity="0.25"/>
-  <path d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 H808" fill="none" stroke="#2FD4EE" stroke-width="1.8" opacity="0.40"/>
-       <path class="gp-trail" d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 H808" pathLength="1000" fill="none"
+  <path d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -15.248 l14 17.248 l3 -6 h3 q4 -12.982 8 0 h10.727 H808" fill="none" stroke="#2FD4EE" stroke-width="1.8" opacity="0.40"/>
+       <path class="gp-trail" d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -15.248 l14 17.248 l3 -6 h3 q4 -12.982 8 0 h10.727 H808" pathLength="1000" fill="none"
              stroke="#2FD4EE" stroke-width="4.0" stroke-linecap="round"
              stroke-dasharray="170 830" opacity="0.07" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 H808" pathLength="1000" fill="none"
+       <path class="gp-sweep" d="M22 126 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -26.257 l14 28.257 l3 -6 h3 q4 -14.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.699 l14 19.699 l3 -6 h3 q4 -13.545 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16.107 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -50 l14 52 l3 -6 h3 q4 -16 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -45.62 l14 47.62 l3 -6 h3 q4 -15.777 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -17.066 l14 19.066 l3 -6 h3 q4 -13.429 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -14.672 l14 16.672 l3 -6 h3 q4 -12.759 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -16.04 l14 18.04 l3 -6 h3 q4 -13.205 8 0 h10.727 h10.727 q3 -5.5 6 0 h2 l2 4 l12 -15.248 l14 17.248 l3 -6 h3 q4 -12.982 8 0 h10.727 H808" pathLength="1000" fill="none"
              stroke="#2FD4EE" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="170 830" filter="url(#gp-glow)"/>
   
@@ -52,12 +52,12 @@
        <text class="gp-heart" x="22" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
            font-size="11.5" fill="#2FD4EE">♥</text>
        <text x="71" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#2FD4EE">90<tspan font-size="10"
+           font-weight="700" fill="#2FD4EE">96<tspan font-size="10"
            font-weight="400" fill="#7E98A3" dx="4">bpm</tspan></text>
        <text x="219" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#7E98A3">MERGES / YR</text>
        <text x="258" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#2FD4EE">266</text>
+           font-weight="700" fill="#2FD4EE">267</text>
        <text x="415" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#7E98A3">REVIEWS / YR</text>
        <text x="457" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
