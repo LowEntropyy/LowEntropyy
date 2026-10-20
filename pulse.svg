@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
-  <title id="gp-title">LowEntropyy's pulse — 162 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 42 contributions this week, 1080 in the last year.</desc>
+  <title id="gp-title">LowEntropyy's pulse — 165 bpm (radiant)</title>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 43 contributions this week, 1081 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
        .gp-pill-pulse{animation:gp-pill-breathe 4.8s ease-in-out infinite}
-       .gp-heart{animation:gp-thump 0.741s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+       .gp-heart{animation:gp-thump 0.727s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
        .gp-dot{animation:gp-blink 1.8s ease-in-out infinite}
        @keyframes gp-sweep{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}
        @keyframes gp-grid-breathe{0%,100%{opacity:.72}50%{opacity:.96}}
@@ -37,11 +37,11 @@
   <line x1="22" y1="207" x2="808" y2="207" stroke="rgba(136,192,208,0.10)" stroke-width="1" opacity="0.55"/>
   <line x1="22" y1="126" x2="808" y2="126"
         stroke="rgba(136,192,208,0.10)" stroke-width="1" opacity="0.25"/>
-  <path d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.53 l14 16.53 l3 -6 h3 q4 -12.688 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -22.36 l14 24.36 l3 -6 h3 q4 -14.17 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" fill="none" stroke="#88C0D0" stroke-width="1.8" opacity="0.40"/>
-       <path class="gp-trail" d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.53 l14 16.53 l3 -6 h3 q4 -12.688 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -22.36 l14 24.36 l3 -6 h3 q4 -14.17 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" pathLength="1000" fill="none"
+  <path d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.514 l14 16.514 l3 -6 h3 q4 -12.679 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -21.873 l14 23.873 l3 -6 h3 q4 -14.116 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" fill="none" stroke="#88C0D0" stroke-width="1.8" opacity="0.40"/>
+       <path class="gp-trail" d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.514 l14 16.514 l3 -6 h3 q4 -12.679 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -21.873 l14 23.873 l3 -6 h3 q4 -14.116 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" pathLength="1000" fill="none"
              stroke="#88C0D0" stroke-width="4.0" stroke-linecap="round"
              stroke-dasharray="170 830" opacity="0.07" filter="url(#gp-glow)"/>
-       <path class="gp-sweep" d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.53 l14 16.53 l3 -6 h3 q4 -12.688 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -22.36 l14 24.36 l3 -6 h3 q4 -14.17 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" pathLength="1000" fill="none"
+       <path class="gp-sweep" d="M22 126 h106 q3 -5.5 6 0 h2 l2 4 l12 -14.514 l14 16.514 l3 -6 h3 q4 -12.679 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -21.873 l14 23.873 l3 -6 h3 q4 -14.116 8 0 h106 h106 q3 -5.5 6 0 h2 l2 4 l12 -76 l14 78 l3 -6 h3 q4 -17 8 0 h106 H808" pathLength="1000" fill="none"
              stroke="#88C0D0" stroke-width="2.6" stroke-linecap="round"
              stroke-dasharray="170 830" filter="url(#gp-glow)"/>
   
@@ -54,12 +54,12 @@
        <text class="gp-heart" x="22" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace"
            font-size="11.5" fill="#88C0D0">♥</text>
        <text x="71" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#88C0D0">162<tspan font-size="10"
+           font-weight="700" fill="#88C0D0">165<tspan font-size="10"
            font-weight="400" fill="#8791A3" dx="4">bpm</tspan></text>
        <text x="219" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8791A3">MERGES / YR</text>
        <text x="258" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
-           font-weight="700" fill="#88C0D0">311</text>
+           font-weight="700" fill="#88C0D0">312</text>
        <text x="415" y="219" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="9.5"
            letter-spacing="1.4" fill="#8791A3">REVIEWS / YR</text>
        <text x="457" y="250" text-anchor="middle" font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="24"
