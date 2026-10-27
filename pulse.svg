@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%"
      viewBox="0 0 830 260" role="img" aria-labelledby="gp-title gp-desc">
   <title id="gp-title">LowEntropyy's pulse — 180 bpm (radiant)</title>
-  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 580 contributions this week, 1670 in the last year.</desc>
+  <desc id="gp-desc">GitHub activity heartbeat for @LowEntropyy: 511 contributions this week, 1670 in the last year.</desc>
   <style>.gp-trail{animation:gp-sweep 3s linear infinite}
        .gp-sweep{animation:gp-sweep 3s linear infinite}
        .gp-grid-pulse{animation:gp-grid-breathe 5.4s ease-in-out infinite}
@@ -71,7 +71,7 @@
            fill="#8791A3" font-size="16" dx="8">SH+</tspan></text>
   <text x="808" y="198" text-anchor="end"
         font-family="ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace" font-size="10.5" fill="#88C0D0"
-        class="gp-dot">● beating now</text>
+        >● beat yesterday</text>
   
   
 </svg>
