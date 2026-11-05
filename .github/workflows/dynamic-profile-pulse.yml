@@ -47,7 +47,8 @@ jobs:
           SUBJECT: LowEntropyy
           LABEL: LowEntropyy
           DAYS: "14"
+          CONTROL_REF: ${{ github.ref_name }}
         run: |
           rm -rf /tmp/pulse-control
-          git clone --quiet --depth 1 --branch main https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
+          git clone --quiet --depth 1 --branch "$CONTROL_REF" https://github.com/LowEntropyy/LowEntropyy.git /tmp/pulse-control
           bash /tmp/pulse-control/scripts/run-pulse.sh
