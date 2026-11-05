@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+# Pulse renderer shared by LowEntropyy's own workflow (MODE=user) and callers
+# such as Sona (MODE=repo). It runs third-party code while holding the calling
+# repository's write token, so everything external is pinned:
+#   - github-pulse is checked out at GITHUB_PULSE_SHA and HEAD is verified.
+#   - tsx is pinned to TSX_VERSION.
+# Upgrading: only when the owner decides. Review the new github-pulse commit
+# (scripts/generate.ts, lib/, dependencies; look for network egress or writes),
+# confirm the inline patches below still apply, then change the values here.
+# The pulse-assets branch is rewritten as a single orphan commit on each
+# publish; do not rely on its history.
 set -euo pipefail
 
 : "${GH_TOKEN:?GH_TOKEN is required}"
@@ -23,8 +33,16 @@ case "$EVENT_SCHEDULE" in
 esac
 
 rm -rf /tmp/github-pulse /tmp/caller /tmp/pulse.svg
+GITHUB_PULSE_SHA="dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b"
+TSX_VERSION="4.23.15"
+
 git clone --quiet --filter=blob:none https://github.com/pouyashahrdami/github-pulse.git /tmp/github-pulse
-git -C /tmp/github-pulse checkout --quiet dbc543e0690a68c8be41fc4bc37a2bbd8bacab0b
+git -C /tmp/github-pulse checkout --quiet "$GITHUB_PULSE_SHA"
+actual_sha="$(git -C /tmp/github-pulse rev-parse HEAD)"
+if [[ "$actual_sha" != "$GITHUB_PULSE_SHA" ]]; then
+  echo "github-pulse HEAD is $actual_sha, expected $GITHUB_PULSE_SHA" >&2
+  exit 1
+fi
 
 python3 - <<'PY'
 from pathlib import Path
@@ -367,30 +385,32 @@ else
   exit 2
 fi
 
-npx --yes tsx /tmp/github-pulse/scripts/generate.ts
+npx --yes "tsx@${TSX_VERSION}" /tmp/github-pulse/scripts/generate.ts
 test -s /tmp/pulse.svg
 
-git clone --quiet --filter=blob:none "https://x-access-token:${GH_TOKEN}@github.com/${CALLER_REPO}.git" /tmp/caller
+remote="https://x-access-token:${GH_TOKEN}@github.com/${CALLER_REPO}.git"
+
+# pulse-assets holds exactly one orphan commit with pulse.svg. Fetch two commits
+# so a branch that still has older history is detected and squashed.
+if git ls-remote --exit-code --heads "$remote" pulse-assets >/dev/null 2>&1; then
+  git clone --quiet --depth 2 --single-branch --branch pulse-assets "$remote" /tmp/caller
+  if [[ "$(git -C /tmp/caller ls-tree --name-only HEAD)" == "pulse.svg" ]] \
+    && ! git -C /tmp/caller rev-parse --verify --quiet HEAD^ >/dev/null \
+    && git -C /tmp/caller show HEAD:pulse.svg | cmp -s - /tmp/pulse.svg; then
+    echo "Pulse unchanged."
+    exit 0
+  fi
+else
+  git init --quiet /tmp/caller
+  git -C /tmp/caller remote add origin "$remote"
+fi
+
 cd /tmp/caller
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-if git ls-remote --exit-code --heads origin pulse-assets >/dev/null 2>&1; then
-  git fetch --quiet origin pulse-assets:pulse-assets
-  git switch --quiet pulse-assets
-else
-  git switch --quiet --orphan pulse-assets
-  git rm -rf . >/dev/null 2>&1 || true
-fi
-
+git switch --quiet --orphan pulse-assets-new
 cp /tmp/pulse.svg pulse.svg
 git add pulse.svg
-
-if git diff --cached --quiet; then
-  echo "Pulse unchanged."
-  exit 0
-fi
-
 git commit --quiet -m "chore: refresh dynamic GitHub Pulse"
-git push --quiet origin HEAD:pulse-assets
+git push --quiet --force origin HEAD:pulse-assets
 echo "Published $CALLER_REPO pulse-assets/pulse.svg"
